@@ -13,7 +13,11 @@ class AlimentType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('category')
+            ->add('category', null, [
+                'choice_label' => 'name',
+                'multiple'     => false,
+                'expanded'     => false,
+            ])
         ;
     }
 

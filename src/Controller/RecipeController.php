@@ -33,7 +33,7 @@ class RecipeController extends AbstractController
     /**
      * @Route("/new", name="new")
      */
-    public function new(Request $request, EntityManagerInterface $entityManager, AlimentRepository $alimentRepository)
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
@@ -55,7 +55,7 @@ class RecipeController extends AbstractController
     /**
      * @Route("/show/{id}", name="show")
      */
-    public function show(Recipe $recipe)
+    public function show(Recipe $recipe): Response
     {
         return $this->render('recipe/show.html.twig' , [
             'recipe' => $recipe
