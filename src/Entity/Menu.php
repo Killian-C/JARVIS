@@ -34,6 +34,11 @@ class Menu
      */
     private $shifts;
 
+    /**
+     * @ORM\OneToOne(targetEntity=ShoppingList::class, inversedBy="menu", cascade={"persist", "remove"})
+     */
+    private $shoppinglist;
+
     public function __construct()
     {
         $this->shifts = new ArrayCollection();
@@ -94,6 +99,18 @@ class Menu
                 $shift->setMenu(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getShoppinglist(): ?ShoppingList
+    {
+        return $this->shoppinglist;
+    }
+
+    public function setShoppinglist(?ShoppingList $shoppinglist): self
+    {
+        $this->shoppinglist = $shoppinglist;
 
         return $this;
     }
