@@ -10,6 +10,23 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Shift
 {
+    const SHIFT_IDENTIFIER = [
+        'Lundi midi',
+        'Lundi soir',
+        'Mardi midi',
+        'Mardi soir',
+        'Mercredi midi',
+        'Mercredi soir',
+        'Jeudi midi',
+        'Jeudi soir',
+        'Vendredi midi',
+        'Vendredi soir',
+        'Samedi midi',
+        'Samedi soir',
+        'Dimanche midi',
+        'Dimanche soir',
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

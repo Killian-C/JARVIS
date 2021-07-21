@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Menu;
+use App\Entity\Shift;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +20,9 @@ class MenuType extends AbstractType
             ])
             ->add('finishedAt', DateType::class, [
                 'widget' => 'single_text',
+            ])
+            ->add('shifts', CollectionType::class, [
+                'entry_type'   => ShiftType::class,
             ])
         ;
     }

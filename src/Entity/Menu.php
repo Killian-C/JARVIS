@@ -30,7 +30,7 @@ class Menu
     private $finishedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Shift::class, mappedBy="menu", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Shift::class, mappedBy="menu", orphanRemoval=true, cascade={"persist"})
      */
     private $shifts;
 

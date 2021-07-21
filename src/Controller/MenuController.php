@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Menu;
+use App\Entity\Shift;
 use App\Form\MenuType;
 use App\Repository\MenuRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,6 +34,12 @@ class MenuController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $menu = new Menu();
+        foreach(Shift::SHIFT_IDENTIFIER as $shiftIdentifier) {
+            $shift = new Shift();
+            $shift->setIdentifier($shiftIdentifier);
+            dump($shift->getIdentifier());
+            $menu->addShift($shift);
+        }
         $form = $this->createForm(MenuType::class, $menu);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

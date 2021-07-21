@@ -5,7 +5,12 @@
 {% block body %}
     <h2>Créer un nouveau menu</h2>
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.startedAt) }}
+    {{ form_row(form.finishedAt) }}
+    {% for shift in form.shifts %}
+        {{ shift.vars.data.identifier }}
+        {{ form_widget(shift) }}
+    {% endfor %}
     <input class="btn btn-primary" type="submit" value="Générer ce menu">
     {{ form_end(form) }}
 {% endblock %}
