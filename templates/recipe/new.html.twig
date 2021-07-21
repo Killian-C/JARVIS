@@ -4,5 +4,8 @@
 
 {% block body %}
     <h2>Ajout d'une nouvelle recette</h2>
-
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" value="Ajouter">
+    {{ form_end(form) }}
 {% endblock %}
