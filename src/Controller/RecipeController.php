@@ -7,6 +7,7 @@ use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
 use App\Repository\AlimentRepository;
+use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,10 +22,11 @@ class RecipeController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(): Response
+    public function index(RecipeRepository $recipeRepository): Response
     {
+        $recipes = $recipeRepository->findAll();
         return $this->render('recipe/index.html.twig', [
-            'controller_name' => 'RecipeController',
+            'recipes' => $recipes,
         ]);
     }
     
@@ -47,6 +49,16 @@ class RecipeController extends AbstractController
 
         return $this->render('recipe/new.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/show/{id}", name="show")
+     */
+    public function show(Recipe $recipe)
+    {
+        return $this->render('recipe/show.html.twig' , [
+            'recipe' => $recipe
         ]);
     }
 }
