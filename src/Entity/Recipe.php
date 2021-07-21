@@ -30,7 +30,7 @@ class Recipe
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="recipe", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="recipe", orphanRemoval=true, cascade={"persist"})
      */
     private $ingredients;
 

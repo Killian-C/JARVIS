@@ -12,9 +12,10 @@ class IngredientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('aliment', null, [
+                'choice_label' => 'name'
+            ])
             ->add('quantity')
-            ->add('aliment')
-            ->add('recipe')
         ;
     }
 

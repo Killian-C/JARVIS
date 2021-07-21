@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Aliment;
+use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
+use App\Repository\AlimentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,9 +31,11 @@ class RecipeController extends AbstractController
     /**
      * @Route("/new", name="new")
      */
-    public function new(Request $request, EntityManagerInterface $entityManager)
+    public function new(Request $request, EntityManagerInterface $entityManager, AlimentRepository $alimentRepository)
     {
         $recipe = new Recipe();
+        $ingredient = new Ingredient();
+        $recipe->addIngredient($ingredient);
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
