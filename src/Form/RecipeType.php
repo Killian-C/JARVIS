@@ -18,8 +18,9 @@ class RecipeType extends AbstractType
             ->add('ingredients',
                 CollectionType::class,
                 [
-                    'entry_type' => IngredientType::class,
+                    'entry_type'    => IngredientType::class,
                     'entry_options' => ['label' => 'ingredient'],
+                    'allow_add'     => true
                 ],
             )
         ;

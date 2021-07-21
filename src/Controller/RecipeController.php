@@ -34,11 +34,12 @@ class RecipeController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, AlimentRepository $alimentRepository)
     {
         $recipe = new Recipe();
-        $ingredient = new Ingredient();
-        $recipe->addIngredient($ingredient);
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($recipe->getIngredients() as $ingredient) {
+                $ingredient->setRecipe($recipe);
+            }
             $entityManager->persist($recipe);
             $entityManager->flush();
             return $this->redirectToRoute('default_index');
