@@ -1,0 +1,7 @@
+.recipe-ingredient-box, .recipe-description-box {
+  border-left: 5px solid var(--primary);
+}
+
+.recipe-ingredient-box .fa-carrot, .recipe-description-box .fa-list-ol {
+  font-size: 1.5rem;
+}
