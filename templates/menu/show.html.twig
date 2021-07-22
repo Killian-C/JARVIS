@@ -3,18 +3,19 @@
 {% block title %}Menu n° {{ menu.id }}{% endblock %}
 
 {% block body %}
-    <a href="{{ path('menu_index') }}">Retour à la liste des menus</a>
-    <h2>Menu du {{ menu.startedAt|date("d/m/Y") }} au {{ menu.finishedAt|date("d/m/Y") }}</h2>
-    <div class="d-flex">
+    <a class="p-3" href="{{ path('menu_index') }}">Retour à la liste des menus</a>
+    <h4 class="text-center my-4">Menu du {{ menu.startedAt|date("d/m/Y") }} au {{ menu.finishedAt|date("d/m/Y") }}</h4>
+    <div class="d-flex flex-wrap justify-content-center">
     {% for i in 0..6 %}
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column alert alert-primary mx-1">
             {% for shift in menu.shifts|slice( i*2,2)  %}
-                <div class="p-3">
+                <div class="p-3 my-1 alert alert-light text-center">
                     {% if shift.recipe %}
-                        <div>{{ shift.identifier }}</div>
+                        <div class="font-weight-bold">{{ shift.identifier }}</div>
                         <a href="{{ path('recipe_show', {'id': shift.recipe.id}) }}">{{ shift.recipe.title }}</a>
                     {% else %}
-                        ---
+                        <div class="font-weight-bold">{{ shift.identifier }}</div>
+                        <p>---</p>
                     {% endif %}
                 </div>
             {% endfor %}
