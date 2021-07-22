@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Aliment;
+use App\Entity\Unit;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,6 +19,11 @@ class AlimentType extends AbstractType
                 'choice_label' => 'name',
                 'multiple'     => false,
                 'expanded'     => false,
+            ])
+            ->add('unit', EntityType::class, [
+                'class'        => Unit::class,
+                'choice_label' => 'name',
+                'placeholder'  => 'Sélectionner l\'unité de mesure',
             ])
         ;
     }

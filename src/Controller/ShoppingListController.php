@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Menu;
-use App\Entity\ShoppingList;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

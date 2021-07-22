@@ -11,14 +11,14 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        for($i = 1; $i <= 25; $i++) {
+        /*for($i = 1; $i <= 25; $i++) {
             $aliment = new Aliment();
             $aliment->setName('aliment_' . $i);
             $aliment->setCategory($this->getReference('category_' . rand(1,10)));
             $manager->persist($aliment);
         }
 
-        $manager->flush();
+        $manager->flush();*/
     }
 
     public function getDependencies()

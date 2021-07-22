@@ -28,6 +28,12 @@ class Aliment
      */
     private $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Unit::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $unit;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +59,18 @@ class Aliment
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getUnit(): ?Unit
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(?Unit $unit): self
+    {
+        $this->unit = $unit;
 
         return $this;
     }
