@@ -34,6 +34,11 @@ class Aliment
      */
     private $unit;
 
+    public function getNameAndUnit()
+    {
+        return $this->getName() . ' (' . $this->getUnit()->getName() . ')';
+    }
+
     public function getId(): ?int
     {
         return $this->id;

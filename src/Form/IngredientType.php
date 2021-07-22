@@ -13,7 +13,7 @@ class IngredientType extends AbstractType
     {
         $builder
             ->add('aliment', null, [
-                'choice_label' => 'name'
+                'choice_label' => 'NameAndUnit'
             ])
             ->add('quantity')
         ;
