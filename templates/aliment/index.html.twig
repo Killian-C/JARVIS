@@ -3,9 +3,11 @@
 {% block title %}Liste des aliments{% endblock %}
 
 {% block body %}
-    <a href="{{ path('aliment_new') }}">Ajouter un nouvel aliment</a>
-    <h2>Liste des aliments</h2>
-    {% for aliment in aliments %}
-        <div>{{ aliment.name }}</div>
-    {% endfor %}
+    <h3 class="text-center my-4">Liste des aliments</h3>
+    <div class="text-center"><a class="btn btn-primary my-4" href="{{ path('aliment_new') }}">Ajouter un nouvel aliment</a></div>
+    <div class="container border text-center w-75 mx-auto rounded-lg my-2">
+        {% for aliment in aliments %}
+            <div class="my-2">{{ aliment.name }}</div>
+        {% endfor %}
+    </div>
 {% endblock %}
