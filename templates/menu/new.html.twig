@@ -1,17 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Créer un nouveau menu{% endblock %}
-
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-    <a href="{{ path('menu_index') }}">Retourner à la liste des menus</a>
-    <h2>Créer un nouveau menu</h2>
-    {{ form_start(form) }}
-    {{ form_row(form.startedAt) }}
-    {{ form_row(form.finishedAt) }}
-    {% for shift in form.shifts %}
-        {{ shift.vars.data.identifier }}
-        {{ form_widget(shift) }}
-    {% endfor %}
-    <input class="btn btn-primary" type="submit" value="Générer ce menu">
-    {{ form_end(form) }}
+    <a class="p-3" href="{{ path('menu_index') }}">Retourner à la liste des menus</a>
+    <h4 class="text-center my-4">Créer un nouveau menu</h4>
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="my-4 alert alert-primary">
+            {{ form_row(form.startedAt) }}
+            {{ form_row(form.finishedAt) }}
+        </div>
+        {% for shift in form.shifts %}
+            <div class="alert alert-info">
+                <div class="text-center font-weight-bold">{{ shift.vars.data.identifier }}</div>
+                {{ form_widget(shift) }}
+            </div>
+        {% endfor %}
+        <div class="text-center mb-5">
+            <input class="btn btn-primary" type="submit" value="Générer ce menu">
+        </div>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

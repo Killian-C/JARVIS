@@ -17,9 +17,11 @@ class MenuType extends AbstractType
         $builder
             ->add('startedAt', DateType::class, [
                 'widget' => 'single_text',
+                'label'  => 'Débute le'
             ])
             ->add('finishedAt', DateType::class, [
                 'widget' => 'single_text',
+                'label'  => 'Fini le'
             ])
             ->add('shifts', CollectionType::class, [
                 'entry_type'   => ShiftType::class,
