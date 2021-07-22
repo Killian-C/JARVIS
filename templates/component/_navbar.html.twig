@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-lg text-light bg-primary">
+    <a class="navbar-brand" href="#"><h2 class="text-light">Jarvis</h2></a>
+    <button class="navbar-toggler btn-secondary" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"><i class="fas fa-sort-down text-primary"></i></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="d-flex flex-column justify-content-center">
+        <div class="d-flex justify-content-around">
+            <a class="text-primary btn btn-light p-2" href="{{ path('recipe_index') }}">Recettes</a>
+            <a class="text-primary btn btn-light p-2" href="{{ path('aliment_index') }}">Aliments</a>
+            <a class="text-primary btn btn-light p-2" href="{{ path('menu_index') }}">Menus</a>
+        </div>
+        <a class="btn btn-secondary my-4 mx-auto text-primary font-weight-bold p-3 w-50" href="{{ path('menu_new') }}">Créer un menu</a>
+        </div>
+        </div>
+</nav>
