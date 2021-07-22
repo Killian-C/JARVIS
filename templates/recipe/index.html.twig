@@ -3,8 +3,15 @@
 {% block title %}Liste des recettes{% endblock %}
 
 {% block body %}
-    <h2>Liste des recettes</h2>
-    {% for recipe in recipes %}
-        <a href="{{ path('recipe_show', {'id': recipe.id}) }}"><div>{{ recipe.title }}</div></a>
-    {% endfor %}
+    <h4 class="text-center py-2">Liste des recettes</h4>
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for recipe in recipes %}
+                <a class="col-11 col-sm-4 recipe-box alert alert-primary mx-2" href="{{ path('recipe_show', {'id': recipe.id}) }}">
+                    <i class="fas fa-utensils mr-2"></i>
+                    {{ recipe.title }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
