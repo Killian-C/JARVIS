@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Ajouter un aliment{% endblock %}
-
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-    <a href="{{ path('aliment_index') }}">Retour à la liste des aliments</a>
-    <h2>Ajouter un nouvel aliment</h2>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <input type="submit" value="Ajouter">
-    {{ form_end(form) }}
+    <a class="p-3" href="{{ path('aliment_index') }}">Retour à la liste des aliments</a>
+    <h3 class="text-center my-4">Ajouter un nouvel aliment</h3>
+    <div class="container">
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.category) }}
+        <div class="text-center"><input class="btn btn-primary" type="submit" value="Ajouter"></div>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
