@@ -17,43 +17,30 @@ class ShoppingListController extends AbstractController
      */
     public function index(Menu $menu): Response
     {
-        $shoppingList = new ShoppingList();
-        $shoppingList->setMenu($menu);
         $currentShifts = $menu->getShifts();
         $listOfIngredients = [];
-        $occurenceArray = [];
-        /*
-        foreach ($currentShifts as $shift) {
-            if ($shift->getRecipe()) {
-                $allIngredients = $shift->getRecipe()->getIngredients();
-                foreach ($allIngredients as $ingredient) {
-                    if (!in_array($ingredient, $listOfIngredients)) {
-                        $newQuantity = $ingredient->getQuantity() * $shift->getPeopleCount();
-                        $ingredient->setQuantity($newQuantity);
-                        $listOfIngredients[] = $ingredient;
-                    } else {
-                        $listOfIngredients
-                    }
-                }
-            }
-        }*/
+        $occurrenceArray = [];
 
         foreach ($currentShifts as $shift) {
             if ($shift->getRecipe()) {
                 $allIngredients = $shift->getRecipe()->getIngredients();
                 foreach ($allIngredients as $ingredient) {
-                    if (!in_array($ingredient, $occurenceArray)) {
+                    if (!in_array($ingredient->getAliment(), $occurrenceArray)) {
                         $newQuantity = $ingredient->getQuantity() * $shift->getPeopleCount();
-                        $listOfIngredients[$ingredient->getAliment()->getName()] = $newQuantity;
-                        $occurenceArray[] = $ingredient;
+                        $alimentName = $ingredient->getAliment()->getName();
+                        $listOfIngredients[$alimentName] = $newQuantity;
+                        $occurrenceArray[] = $ingredient->getAliment();
                     } else {
                         $newQuantity = $ingredient->getQuantity() * $shift->getPeopleCount();
-                        $listOfIngredients[$ingredient->getAliment()->getName()] += $newQuantity;
+                        $alimentName = $ingredient->getAliment()->getName();
+                        $listOfIngredients[$alimentName] += $newQuantity;
                     }
                 }
             }
         }
+
         return $this->render('shopping_list/index.html.twig', [
+            'menu'        => $menu,
             'ingredients' => $listOfIngredients,
         ]);
     }

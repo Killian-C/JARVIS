@@ -3,16 +3,14 @@
 {% block title %}Liste de course{% endblock %}
 
 {% block body %}
-        {#{% for ingredient in ingredients %}
+    <a class="p-3" href="{{ path('menu_show', {'id': menu.id}) }}">Retour au menu</a>
+    <h4 class="text-center my-4">Liste de course de la semaine du {{ menu.startedAt|date('d/m/Y') }} au {{ menu.finishedAt|date('d/m/Y') }}</h4>
+    <div class="shopping-list container alert alert-warning w-75">
+        {% for ingredient, quantity in ingredients %}
             <div>
-                <input type="checkbox" id="{{ ingredient.id }}">
-                <label for="{{ ingredient.id }}">{{ ingredient.aliment.name }} x {{ ingredient.quantity }}</label>
+                <input type="checkbox" id="{{ ingredient }}">
+                <label class="text-dark font-weight-bold" for="{{ ingredient }}">{{ ingredient }} x {{ quantity }}</label>
             </div>
-        {% endfor %}#}
-    {% for key, ingredient in ingredients %}
-        <div>
-            <input type="checkbox" id="{{ key }}">
-            <label for="{{ key }}">{{ key }} x {{ ingredient }}</label>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %}
