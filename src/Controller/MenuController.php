@@ -37,6 +37,7 @@ class MenuController extends AbstractController
         foreach(Shift::SHIFT_IDENTIFIER as $shiftIdentifier) {
             $shift = new Shift();
             $shift->setIdentifier($shiftIdentifier);
+            $shift->setPeopleCount(0);
             $menu->addShift($shift);
         }
         $form = $this->createForm(MenuType::class, $menu);

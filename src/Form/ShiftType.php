@@ -16,7 +16,9 @@ class ShiftType extends AbstractType
         $builder
             ->add('recipe', EntityType::class, [
                 'class' => Recipe::class,
-                'choice_label' => 'title'
+                'choice_label' => 'title',
+                'placeholder' => 'Sélectionner une recette',
+                'required' => false
             ])
             ->add('peopleCount')
         ;
