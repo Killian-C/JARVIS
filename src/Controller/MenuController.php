@@ -37,7 +37,6 @@ class MenuController extends AbstractController
         foreach(Shift::SHIFT_IDENTIFIER as $shiftIdentifier) {
             $shift = new Shift();
             $shift->setIdentifier($shiftIdentifier);
-            dump($shift->getIdentifier());
             $menu->addShift($shift);
         }
         $form = $this->createForm(MenuType::class, $menu);
@@ -49,6 +48,16 @@ class MenuController extends AbstractController
         }
         return $this->render('menu/new.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/show/{id}", name="show")
+     */
+    public function show(Menu $menu)
+    {
+        return $this->render('menu/show.html.twig', [
+           'menu' => $menu,
         ]);
     }
 }
