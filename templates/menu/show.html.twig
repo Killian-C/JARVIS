@@ -5,6 +5,9 @@
 {% block body %}
     <a class="p-3" href="{{ path('menu_index') }}">Retour à la liste des menus</a>
     <h4 class="text-center my-4">Menu du {{ menu.startedAt|date("d/m/Y") }} au {{ menu.finishedAt|date("d/m/Y") }}</h4>
+    <div class="text-center my-3">
+        <a class="btn btn-primary" href="{{ path('shoppingList', {'menu_id': menu.id}) }}">Générer la liste de courses</a>
+    </div>
     <div class="d-flex flex-wrap justify-content-center">
     {% for i in 0..6 %}
         <div class="d-flex flex-column alert alert-primary mx-1">

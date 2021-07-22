@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de course{% endblock %}
+
+{% block body %}
+        {#{% for ingredient in ingredients %}
+            <div>
+                <input type="checkbox" id="{{ ingredient.id }}">
+                <label for="{{ ingredient.id }}">{{ ingredient.aliment.name }} x {{ ingredient.quantity }}</label>
+            </div>
+        {% endfor %}#}
+    {% for key, ingredient in ingredients %}
+        <div>
+            <input type="checkbox" id="{{ key }}">
+            <label for="{{ key }}">{{ key }} x {{ ingredient }}</label>
+        </div>
+    {% endfor %}
+{% endblock %}
