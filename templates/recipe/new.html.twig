@@ -5,14 +5,21 @@
     {{ parent() }}
     {{ encore_entry_script_tags('form') }}
 {% endblock %}
-
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-    <h2>Ajout d'une nouvelle recette</h2>
-    {{ form_start(form) }}
-    {{ form_row(form.title) }}
-    {{ form_row(form.description) }}
-    <ul id="ingredients-container" class="ingredients" data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e('html_attr') }}"></ul>
-    <button id="add-ingredient" type="button" class="add_item_link btn btn-primary" data-collection-holder-class="ingredients">Ajouter un ingrédient</button>
-    <input class="btn btn-primary" type="submit" value="Ajouter">
-    {{ form_end(form) }}
+    <h4 class="text-center">Ajout d'une nouvelle recette</h4>
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="form-box text-center"></div>
+            {{ form_row(form.title) }}
+            {{ form_row(form.description) }}
+            <ul id="ingredients-container" class="ingredients" data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e('html_attr') }}"></ul>
+            <button id="add-ingredient" type="button" class="add_item_link btn btn-primary" data-collection-holder-class="ingredients">Ajouter un ingrédient</button>
+            <div class="d-none">{{ form_rest(form) }}</div>
+        </div>
+        <div class="text-center my-5">
+            <input class="btn btn-primary" type="submit" value="Ajouter">
+        </div>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

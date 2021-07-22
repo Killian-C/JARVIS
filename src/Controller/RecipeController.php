@@ -44,7 +44,7 @@ class RecipeController extends AbstractController
             }
             $entityManager->persist($recipe);
             $entityManager->flush();
-            return $this->redirectToRoute('default_index');
+            return $this->redirectToRoute('recipe_index');
         }
 
         return $this->render('recipe/new.html.twig', [
