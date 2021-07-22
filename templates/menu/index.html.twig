@@ -3,13 +3,18 @@
 {% block title %}Liste des menus{% endblock %}
 
 {% block body %}
-    <a href="{{ path('menu_new') }}">Créer un nouveau menu</a>
-    <h2>Liste des menus</h2>
-    {% for menu in menus %}
-        <a href="{{ path('menu_show', {'id': menu.id}) }}">
-            <div>
-                Menu n°{{ menu.id }} du {{ menu.startedAt|date("d/m/Y") }} au {{ menu.finishedAt|date("d/m/Y") }}
-            </div>
-        </a>
-    {% endfor %}
+    <h4 class="text-center">Liste des menus</h4>
+    <div class="text-center">
+        <a class="my-4 btn btn-primary" href="{{ path('menu_new') }}">Créer un nouveau menu</a>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for menu in menus %}
+                <a class="col-11 alert alert-primary text-center" href="{{ path('menu_show', {'id': menu.id}) }}">
+                    <i class="fas fa-table"></i>
+                    Menu n°{{ menu.id }} <br> du {{ menu.startedAt|date("d/m/Y") }} <br> au {{ menu.finishedAt|date("d/m/Y") }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
