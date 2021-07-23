@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Aliment;
 use App\Form\AlimentType;
 use App\Repository\AlimentRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,11 +20,12 @@ class AlimentController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(AlimentRepository $alimentRepository): Response
+    public function index(AlimentRepository $alimentRepository, CategoryRepository $categoryRepository): Response
     {
-        $aliments = $alimentRepository->findBy([], ['name' => 'ASC']);
+        //$aliments = $alimentRepository->findBy([], ['name' => 'ASC']);
+        $categories = $categoryRepository->findBy([], [ 'name' => 'ASC' ]);
         return $this->render('aliment/index.html.twig', [
-            'aliments' => $aliments,
+            'categories' => $categories,
         ]);
     }
 

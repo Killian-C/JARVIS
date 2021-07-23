@@ -4,10 +4,17 @@
 
 {% block body %}
     <h3 class="text-center my-4">Liste des aliments</h3>
-    <div class="text-center"><a class="btn btn-primary my-4" href="{{ path('aliment_new') }}">Ajouter un nouvel aliment</a></div>
-    <div class="container border text-center w-75 mx-auto rounded-lg my-2">
-        {% for aliment in aliments %}
-            <div class="my-2">- {{ aliment.name }} ({{ aliment.unit.name }})</div>
-        {% endfor %}
+    <div class="text-center">
+        <a class="btn btn-primary my-4" href="{{ path('aliment_new') }}">Ajouter un nouvel aliment</a>
     </div>
+    {% for category in categories %}
+        {% if category.aliments is not empty %}
+            <div class="container border text-center w-75 mx-auto rounded-lg my-2">
+                <h6 class="text-center">{{ category.name }}</h6>
+                {% for aliment in category.aliments %}
+                    <div class="my-2">- {{ aliment.name }} ({{ aliment.unit.name }})</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
