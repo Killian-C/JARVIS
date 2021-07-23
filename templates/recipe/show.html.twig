@@ -4,14 +4,15 @@
 
 {% block body %}
     <a class="p-2" href="{{ path('recipe_index') }}">Retour à la liste des recettes</a>
-    <h4 class="text-center my-4">{{ recipe.title }}</h4>
+    <h4 class="text-center mt-4">{{ recipe.title }}</h4>
+    <p class="text-center text-primary mb-4">(pour 1 personne)</p>
     <div class="container">
         <div class="row justify-content-center m-0">
             <div class="col-12 col-md-5 recipe-ingredient-box alert alert-secondary my-3 mx-2">
                 <h5 class="text-center mb-3"><i class="fas fa-carrot mr-2"></i> Ingrédients</h5>
                 <ul>
                     {% for ingredient in recipe.ingredients %}
-                        <li>{{ ingredient.aliment.name }} - qté : {{ ingredient.quantity }}</li>
+                        <li>{{ ingredient.aliment.name }} - qté : {{ ingredient.quantity }} {{ ingredient.aliment.unit.name }}</li>
                     {% endfor %}
                 </ul>
             </div>

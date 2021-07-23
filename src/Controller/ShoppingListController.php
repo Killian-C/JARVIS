@@ -26,12 +26,12 @@ class ShoppingListController extends AbstractController
                 foreach ($allIngredients as $ingredient) {
                     if (!in_array($ingredient->getAliment(), $occurrenceArray)) {
                         $newQuantity = $ingredient->getQuantity() * $shift->getPeopleCount();
-                        $alimentName = $ingredient->getAliment()->getName();
+                        $alimentName = $ingredient->getAliment()->getNameAndUnit();
                         $listOfIngredients[$alimentName] = $newQuantity;
                         $occurrenceArray[] = $ingredient->getAliment();
                     } else {
                         $newQuantity = $ingredient->getQuantity() * $shift->getPeopleCount();
-                        $alimentName = $ingredient->getAliment()->getName();
+                        $alimentName = $ingredient->getAliment()->getNameAndUnit();
                         $listOfIngredients[$alimentName] += $newQuantity;
                     }
                 }
