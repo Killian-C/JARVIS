@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Menu
 {
+    public const NB_MIN_DAY = 0;
+    public const NB_MAX_DAY = 6;
+    public const NB_SHIFT_PER_DAY = 2;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
