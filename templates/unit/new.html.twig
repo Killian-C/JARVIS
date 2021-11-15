@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle unité de mesure{% endblock %}
+
+{% block body %}
+    <h1>Créer une nouvelle unité de mesure</h1>
+
+    {{ include('unit/_form.html.twig') }}
+
+    <a href="{{ path('unit_index') }}">Retour à la liste des unités de mesures</a>
+{% endblock %}

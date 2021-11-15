@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des categories d'aliment{% endblock %}
+
+{% block body %}
+<h2 class="text-center py-2">Catégories d'aliment</h2>
+<div class="container text-center">
+        <a href="{{ path('category_new') }}" class="btn btn-primary my-3">Ajouter une catégorie</a>
+        <ul class="list-group">
+            {% for category in categories %}
+                <li class="list-group-item d-flex justify-content-center align-items-center">
+                        {{ category.name }}
+                        <form action="{{ path('category_edit', {'id': category.id}) }}" method="post" class="ml-3">
+                                <button class="btn btn-secondary">📝</button>
+                        </form>
+                        <form action="{{ path('category_delete', {'id': category.id}) }}" method="post" class="ml-3">
+                            <button class="btn btn-secondary">🗑</button>
+                        </form>
+                </li>
+            {% endfor %}
+        </ul>
+</div>
+{% endblock %}

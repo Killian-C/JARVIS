@@ -4,13 +4,15 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
     <a class="p-3" href="{{ path('aliment_index') }}">Retour à la liste des aliments</a>
-    <h3 class="text-center my-4">Ajouter un nouvel aliment</h3>
+    <h3 class="text-center my-4">
+        {% block title_form %}Ajouter un nouvel aliment{% endblock %}
+    </h3>
     <div class="container">
         {{ form_start(form) }}
         {{ form_row(form.name) }}
         {{ form_row(form.category) }}
         {{ form_row(form.unit) }}
-        <div class="text-center"><input class="btn btn-primary" type="submit" value="Ajouter"></div>
+        <div class="text-center"><input class="btn btn-primary" type="submit" value="{% block text_button %}Ajouter{% endblock %}"></div>
         {{ form_end(form) }}
     </div>
 {% endblock %}

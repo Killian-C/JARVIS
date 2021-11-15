@@ -6,15 +6,30 @@
     <h3 class="text-center my-4">Liste des aliments</h3>
     <div class="text-center">
         <a class="btn btn-primary my-4" href="{{ path('aliment_new') }}">Ajouter un nouvel aliment</a>
+        <a class="btn btn-primary my-4" href="{{ path('category_index') }}">Voir les catégories d'aliment</a>
     </div>
-    {% for category in categories %}
-        {% if category.aliments is not empty %}
-            <div class="container border text-center w-75 mx-auto rounded-lg my-2">
-                <h6 class="text-center">{{ category.name }}</h6>
-                {% for aliment in category.aliments %}
-                    <div class="my-2">- {{ aliment.name }} ({{ aliment.unit.name }})</div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endfor %}
+    <div class="container m-0 p-0 mx-auto">
+        <div class="row m-0 p-0 justify-content-center text-center">
+            {% for category in categories %}
+                {% if category.aliments is not empty %}
+                    <div class="col-12 col-md-5 border rounded-lg m-2 p-2 d-flex flex-column">
+                        <h6 class="text-center">{{ category.name }}</h6>
+                        {% for aliment in category.aliments %}
+                            <div class="d-flex justify-content-center align-items-center">
+                                <p class="my-2">
+                                    - {{ aliment.name }} ({{ aliment.unit.name }})
+                                </p>
+                                <form action="{{ path('aliment_edit', {'id': aliment.id}) }}" method="post" class="ml-3">
+                                    <button class="btn btn-secondary">📝</button>
+                                </form>
+                                <form action="{{ path('aliment_delete', {'id': aliment.id}) }}" method="post" class="ml-3">
+                                    <button class="btn btn-secondary">🗑</button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

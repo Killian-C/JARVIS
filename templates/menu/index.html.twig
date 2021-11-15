@@ -10,9 +10,19 @@
     <div class="container">
         <div class="row justify-content-center">
             {% for menu in menus %}
-                <a class="col-11 alert alert-primary text-center" href="{{ path('menu_show', {'id': menu.id}) }}">
-                    <i class="fas fa-table"></i>
-                    Menu n°{{ menu.id }} <br> du {{ menu.startedAt|date("d/m/Y") }} <br> au {{ menu.finishedAt|date("d/m/Y") }}
+                <a class="col-11 alert alert-primary d-flex align-items-center justify-content-center" href="{{ path('menu_show', {'id': menu.id}) }}">
+                    <div>
+                        <i class="fas fa-table"></i>
+                        Menu n°{{ menu.id }} <br> du {{ menu.startedAt|date("d/m/Y") }} <br> au {{ menu.finishedAt|date("d/m/Y") }}
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end">
+                        <form action="{{ path('menu_edit', {'id': menu.id}) }}" method="post" class="ml-3">
+                            <button class="btn btn-secondary">📝</button>
+                        </form>
+                        <form action="{{ path('menu_delete', {'id': menu.id}) }}" method="post" class="ml-3">
+                            <button class="btn btn-secondary">🗑</button>
+                        </form>
+                    </div>
                 </a>
             {% endfor %}
         </div>

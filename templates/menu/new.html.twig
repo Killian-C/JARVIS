@@ -4,7 +4,9 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
     <a class="p-3" href="{{ path('menu_index') }}">Retourner à la liste des menus</a>
-    <h4 class="text-center my-4">Créer un nouveau menu</h4>
+    <h4 class="text-center my-4">
+        {% block title_form %}Créer un nouveau menu{% endblock %}
+    </h4>
     <div class="container">
         {{ form_start(form) }}
         <div class="my-4 alert alert-primary">
@@ -18,7 +20,7 @@
             </div>
         {% endfor %}
         <div class="text-center mb-5">
-            <input class="btn btn-primary" type="submit" value="Générer ce menu">
+            <input class="btn btn-primary" type="submit" value="{% block text_button %}Générer ce menu{% endblock %}">
         </div>
         {{ form_end(form) }}
     </div>

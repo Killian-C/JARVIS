@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mettre à jour l'unité de mesure{% endblock %}
+
+{% block body %}
+    <h4>Editer l'unité de mesure Unit</h4>
+
+    {{ include('unit/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('unit_index') }}">Retour à la liste des unités de mesures</a>
+
+    {{ include('unit/_delete_form.html.twig') }}
+{% endblock %}

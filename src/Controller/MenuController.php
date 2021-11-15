@@ -61,4 +61,34 @@ class MenuController extends AbstractController
            'menu' => $menu,
         ]);
     }
+
+    /**
+     * @Route("/edit/{id}", name="edit", methods={"POST"})
+     */
+    public function edit(Menu $menu, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $form = $this->createForm(MenuType::class, $menu);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            $this->redirectToRoute('menu_index');
+        }
+
+        return $this->render('menu/edit.html.twig', [
+            'menu' => $menu,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/delete/{id}", name="delete", methods={"POST"})
+     */
+    public function delete(Menu $menu, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($menu);
+        $entityManager->flush();
+        return $this->redirectToRoute('menu_index');
+    }
 }
+

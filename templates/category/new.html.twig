@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle catégorie d'aliment{% endblock %}
+
+{% block body %}
+<a href="{{ path('category_index') }}">Retour à la liste des catégories</a>
+<div class="container text-center my-5">
+    {{ form_start(form) }}
+    <div>{{ form_label(form.name) }}</div>
+    <div>{{ form_widget(form.name) }}</div>
+    <button class="btn btn-primary my-3" type="submit">{% block text_button %}Ajouter{% endblock %}</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

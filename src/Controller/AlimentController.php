@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Aliment;
 use App\Form\AlimentType;
-use App\Repository\AlimentRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,9 +19,8 @@ class AlimentController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(AlimentRepository $alimentRepository, CategoryRepository $categoryRepository): Response
+    public function index(CategoryRepository $categoryRepository): Response
     {
-        //$aliments = $alimentRepository->findBy([], ['name' => 'ASC']);
         $categories = $categoryRepository->findBy([], [ 'name' => 'ASC' ]);
         return $this->render('aliment/index.html.twig', [
             'categories' => $categories,
@@ -32,7 +30,7 @@ class AlimentController extends AbstractController
     /**
      * @Route("/new", name="new")
      */
-    public function new(Request $request, EntityManagerInterface  $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $aliment = new Aliment();
         $form = $this->createForm(AlimentType::class, $aliment);
@@ -47,5 +45,34 @@ class AlimentController extends AbstractController
         return $this->render('aliment/new.html.twig', [
            'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/edit/{id}", name="edit")
+     */
+    public function edit(Request $request, Aliment $aliment, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(AlimentType::class, $aliment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('aliment_index');
+        }
+
+        return $this->render('aliment/edit.html.twig', [
+           'aliment' => $aliment,
+           'form'    => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/delete/{id}", name="delete")
+     */
+    public function delete(Aliment $aliment, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($aliment);
+        $entityManager->flush();
+        return $this->redirectToRoute('aliment_index');
     }
 }

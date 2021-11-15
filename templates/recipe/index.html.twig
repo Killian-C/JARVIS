@@ -8,9 +8,19 @@
     <div class="container">
         <div class="row justify-content-center">
             {% for recipe in recipes %}
-                <a class="col-11 col-sm-4 recipe-box alert alert-primary mx-2" href="{{ path('recipe_show', {'id': recipe.id}) }}">
-                    <i class="fas fa-utensils mr-2"></i>
-                    {{ recipe.title }}
+                <a class="col-11 col-sm-4 recipe-box alert alert-primary mx-2 d-flex align-items-center justify-content-between" href="{{ path('recipe_show', {'id': recipe.id}) }}">
+                    <div>
+                        <i class="fas fa-utensils mr-2"></i>
+                        {{ recipe.title }}
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <form action="{{ path('recipe_edit', {'id': recipe.id}) }}" method="post" class="ml-3">
+                            <button class="btn btn-secondary">📝</button>
+                        </form>
+                        <form action="{{ path('recipe_delete', {'id': recipe.id}) }}" method="post" class="ml-3">
+                            <button class="btn btn-secondary">🗑</button>
+                        </form>
+                    </div>
                 </a>
             {% endfor %}
         </div>

@@ -6,6 +6,9 @@
     <a class="p-2" href="{{ path('recipe_index') }}">Retour à la liste des recettes</a>
     <h4 class="text-center mt-4">{{ recipe.title }}</h4>
     <p class="text-center text-primary mb-4">(pour 1 personne)</p>
+    <form action="{{ path('recipe_edit', {'id': recipe.id}) }}" method="post" class="text-center">
+        <button class="btn btn-primary">Mettre à jour cette recette</button>
+    </form>
     <div class="container">
         <div class="row justify-content-center m-0">
             <div class="col-12 col-md-5 recipe-ingredient-box alert alert-secondary my-3 mx-2">
