@@ -7,18 +7,34 @@
 {% endblock %}
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-    <h4 class="text-center">Ajout d'une nouvelle recette</h4>
+    <a href="{{ path('recipe_index') }}">Retour à la liste des recettes</a>
+    <h4 class="text-center">
+        {% block title_form %}Ajout d'une nouvelle recette{% endblock %}
+    </h4>
     <div class="container">
         {{ form_start(form) }}
-        <div class="form-box text-center"></div>
+        <div class="form-box">
             {{ form_row(form.title) }}
             {{ form_row(form.description) }}
-            <ul id="ingredients-container" class="ingredients" data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e('html_attr') }}"></ul>
-            <button id="add-ingredient" type="button" class="add_item_link btn btn-primary" data-collection-holder-class="ingredients">Ajouter un ingrédient</button>
+            <ul id="ingredients-container" class="ingredients" data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e('html_attr') }}">
+                {% for ingredient in form.ingredients %}
+                    <li>
+                        {{ form_widget(ingredient) }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <datalist id="alimentList">
+                {% for aliment in aliments %}
+                    <option value="{{ aliment }}">
+                        {{ aliment }}
+                    </option>
+                {% endfor %}
+            </datalist>
+            <button id="add-ingredient" type="button" class="add_item_link btn btn-secondary" data-collection-holder-class="ingredients">Ajouter un ingrédient</button>
             <div class="d-none">{{ form_rest(form) }}</div>
         </div>
         <div class="text-center my-5">
-            <input class="btn btn-primary" type="submit" value="Ajouter">
+            <input class="btn btn-primary p-3" type="submit" value="{% block text_button %}Ajouter{% endblock %}">
         </div>
         {{ form_end(form) }}
     </div>

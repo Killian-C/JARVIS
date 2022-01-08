@@ -34,6 +34,16 @@ class Aliment
      */
     private $unit;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $prettyName;
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     public function getNameAndUnit()
     {
         return $this->getName() . ' (' . $this->getUnit()->getName() . ')';
@@ -76,6 +86,18 @@ class Aliment
     public function setUnit(?Unit $unit): self
     {
         $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function getPrettyName(): ?string
+    {
+        return $this->prettyName;
+    }
+
+    public function setPrettyName(string $prettyName): self
+    {
+        $this->prettyName = $prettyName;
 
         return $this;
     }

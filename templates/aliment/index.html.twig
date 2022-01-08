@@ -17,7 +17,7 @@
                         {% for aliment in category.aliments %}
                             <div class="d-flex justify-content-center align-items-center">
                                 <p class="my-2">
-                                    - {{ aliment.name }} ({{ aliment.unit.name }})
+                                    - {{ aliment.prettyName ?: aliment.name ~ ' (' ~ aliment.unit.name ~ ')' }}
                                 </p>
                                 <form action="{{ path('aliment_edit', {'id': aliment.id}) }}" method="post" class="ml-3">
                                     <button class="btn btn-secondary">📝</button>

@@ -36,6 +36,8 @@ class AlimentController extends AbstractController
         $form = $this->createForm(AlimentType::class, $aliment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $prettyName = sprintf('%s (%s)', $aliment->getName(), $aliment->getUnit()->getName());
+            $aliment->setPrettyName($prettyName);
             $entityManager->persist($aliment);
             $entityManager->flush();
 
