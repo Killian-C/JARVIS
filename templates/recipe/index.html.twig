@@ -4,7 +4,11 @@
 
 {% block body %}
     <h4 class="text-center py-2">Liste des recettes</h4>
-    <div class="text-center"><a class="my-3 btn btn-primary" href="{{ path('recipe_new') }}">Rédiger une nouvelle recette</a></div>
+    <div class="text-center">
+        <a class="my-3 btn btn-primary" href="{{ path('recipe_new') }}">Rédiger une nouvelle recette</a>
+        <a class="my-3 btn btn-primary" href="{{ path('recipetype_index') }}">Gérer les types de recette</a>
+        <a class="my-3 btn btn-primary" href="{{ path('season_index') }}">Gérer les saisons</a>
+    </div>
     <div class="container">
         <div class="row justify-content-center">
             {% for recipe in recipes %}
