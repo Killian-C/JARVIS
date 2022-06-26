@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des saisons{% endblock %}
+
+{% block body %}
+    <h3 class="text-center my-4">Liste des saisons</h3>
+    <div class="text-center">
+        <a class="btn btn-primary my-4" href="{{ path('season_new') }}">Ajouter une nouvelle saison</a>
+    </div>
+    <div class="container m-0 p-0 mx-auto">
+        <div class="row m-0 p-0 justify-content-center text-center">
+            {% for season in seasons %}
+                <div class="col-12 col-md-5 border rounded-lg m-2 p-2 d-flex flex-column">
+                    <h6 class="text-center">{{ season.name }}</h6>
+                        </p>
+                        <form action="{{ path('season_edit', {'id': season.id}) }}" method="post" class="ml-3">
+                            <button class="btn btn-secondary">📝</button>
+                        </form>
+                        <form action="{{ path('season_delete', {'id': season.id}) }}" method="post" class="ml-3">
+                            <button class="btn btn-secondary">🗑</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
