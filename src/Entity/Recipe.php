@@ -35,7 +35,18 @@ class Recipe
     private $ingredients;
 
     /**
-     * @ORM\OneToMany(targetEntity=Shift::class, mappedBy="recipe")
+     * @ORM\ManyToOne(targetEntity=RecipeType::class, inversedBy="recipes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recipeType;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Season::class, inversedBy="recipes")
+     */
+    private $season;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Shift::class, mappedBy="recipes")
      */
     private $shifts;
 
@@ -130,6 +141,30 @@ class Recipe
                 $shift->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRecipeType(): ?RecipeType
+    {
+        return $this->recipeType;
+    }
+
+    public function setRecipeType(?RecipeType $recipeType): self
+    {
+        $this->recipeType = $recipeType;
+
+        return $this;
+    }
+
+    public function getSeason(): ?Season
+    {
+        return $this->season;
+    }
+
+    public function setSeason(?Season $season): self
+    {
+        $this->season = $season;
 
         return $this;
     }
