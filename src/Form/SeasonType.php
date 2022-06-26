@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Season;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,8 +14,14 @@ class SeasonType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('start_date')
-            ->add('end_date')
+            ->add('start_date', DateType::class, [
+                'widget' => 'choice',
+                'html5'  => false,
+            ])
+            ->add('end_date', DateType::class, [
+                'widget' => 'choice',
+                'html5'  => false,
+            ])
         ;
     }
 

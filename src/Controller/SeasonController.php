@@ -4,11 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Season;
 use App\Form\SeasonType;
-use Doctrine\ORM\ORMException;
-use Doctrine\ORM\EntityManager;
 use App\Repository\SeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\OptimisticLockException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -79,11 +76,9 @@ class SeasonController extends AbstractController
 
     /**
      * @Route("/delete/{id}", name="season_delete")
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @param Season $season
      * @return Response
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function delete(EntityManagerInterface $em, Season $season): Response
     {
