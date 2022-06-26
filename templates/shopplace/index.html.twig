@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des lieux d'achat{% endblock %}
+
+{% block body %}
+    <h3 class="text-center my-4">Liste des lieux d'achat</h3>
+    <div class="text-center">
+        <a class="btn btn-primary my-4" href="{{ path('shopplace_new') }}">Ajouter un nouveau lieu d'achat</a>
+    </div>
+    <div class="container m-0 p-0 mx-auto">
+        <div class="row m-0 p-0 justify-content-center text-center">
+            {% for shopplace in shopplaces %}
+                <div class="col-12 col-md-5 border rounded-lg m-2 p-2 d-flex flex-column">
+                    <h6 class="text-center">{{ shopplace.name }}</h6>
+                        </p>
+                        <form action="{{ path('shopplace_edit', {'id': shopplace.id}) }}" method="post" class="ml-3">
+                            <button class="btn btn-secondary">📝</button>
+                        </form>
+                        <form action="{{ path('shopplace_delete', {'id': shopplace.id}) }}" method="post" class="ml-3">
+                            <button class="btn btn-secondary">🗑</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
