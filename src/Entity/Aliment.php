@@ -39,6 +39,12 @@ class Aliment
      */
     private $prettyName;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ShopPlace::class, inversedBy="aliments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $shopPlace;
+
     public function __toString()
     {
         return $this->getName();
@@ -98,6 +104,18 @@ class Aliment
     public function setPrettyName(string $prettyName): self
     {
         $this->prettyName = $prettyName;
+
+        return $this;
+    }
+
+    public function getShopPlace(): ?ShopPlace
+    {
+        return $this->shopPlace;
+    }
+
+    public function setShopPlace(?ShopPlace $shopPlace): self
+    {
+        $this->shopPlace = $shopPlace;
 
         return $this;
     }

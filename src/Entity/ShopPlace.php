@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ShopPlaceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +24,16 @@ class ShopPlace
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Aliment::class, mappedBy="shopPlace")
+     */
+    private $aliments;
+
+    public function __construct()
+    {
+        $this->aliments = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +47,36 @@ class ShopPlace
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Aliment[]
+     */
+    public function getAliments(): Collection
+    {
+        return $this->aliments;
+    }
+
+    public function addAliment(Aliment $aliment): self
+    {
+        if (!$this->aliments->contains($aliment)) {
+            $this->aliments[] = $aliment;
+            $aliment->setShopPlace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAliment(Aliment $aliment): self
+    {
+        if ($this->aliments->removeElement($aliment)) {
+            // set the owning side to null (unless already changed)
+            if ($aliment->getShopPlace() === $this) {
+                $aliment->setShopPlace(null);
+            }
+        }
 
         return $this;
     }

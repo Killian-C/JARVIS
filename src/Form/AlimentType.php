@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Aliment;
+use App\Entity\ShopPlace;
 use App\Entity\Unit;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -24,6 +25,11 @@ class AlimentType extends AbstractType
                 'class'        => Unit::class,
                 'choice_label' => 'name',
                 'placeholder'  => 'Sélectionner l\'unité de mesure',
+            ])
+            ->add('shopPlace', EntityType::class, [
+                'class'        => ShopPlace::class,
+                'choice_label' => 'name',
+                'placeholder'  => 'Sélectionner un lieu d\'achat',
             ])
         ;
     }

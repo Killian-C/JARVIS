@@ -12,14 +12,12 @@
             {% for recipetype in recipetypes %}
                 <div class="col-12 col-md-5 border rounded-lg m-2 p-2 d-flex flex-column">
                     <h6 class="text-center">{{ recipetype.name }}</h6>
-                        </p>
-                        <form action="{{ path('shopplace_edit', {'id': recipetype.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary">📝</button>
-                        </form>
-                        <form action="{{ path('shopplace_delete', {'id': recipetype.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary">🗑</button>
-                        </form>
-                    </div>
+                    <form action="{{ path('shopplace_edit', {'id': recipetype.id}) }}" method="post" class="ml-3">
+                        <button class="btn btn-secondary">📝</button>
+                    </form>
+                    <form action="{{ path('shopplace_delete', {'id': recipetype.id}) }}" method="post" class="ml-3">
+                        <button class="btn btn-secondary">🗑</button>
+                    </form>
                 </div>
             {% endfor %}
         </div>

@@ -20,9 +20,10 @@ class UnitFixtures extends Fixture
     ];
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < count(self::UNITS); $i++) {
+        foreach (self::UNITS as $unitName) {
             $unit = new Unit();
-            $unit->setName(self::UNITS[$i]);
+            $unit->setName($unitName);
+            $this->addReference($unitName, $unit);
             $manager->persist($unit);
         }
 

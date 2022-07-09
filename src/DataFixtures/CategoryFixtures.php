@@ -17,15 +17,16 @@ class CategoryFixtures extends Fixture
         'Légume',
         'Surgelé',
         'Viande',
+        'Féculent'
     ];
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < count(self::CATEGORIES); $i++) {
+        foreach (self::CATEGORIES as $categoryName) {
             $category = new Category();
-            $category->setName(self::CATEGORIES[$i]);
+            $category->setName($categoryName);
             $manager->persist($category);
-            $this->addReference(self::CATEGORIES[$i], $category);
+            $this->addReference($categoryName, $category);
         }
 
         $manager->flush();
