@@ -42,24 +42,20 @@ class Shift
     private $identifier;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $peopleCount;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Menu::class, inversedBy="shifts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $menu;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Recipe::class, inversedBy="shifts")
+     * @ORM\OneToMany(targetEntity=Dish::class, mappedBy="shift", cascade={"persist"})
      */
-    private $recipes;
+    private $dishes;
 
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
+        $this->dishes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,18 +75,6 @@ class Shift
         return $this;
     }
 
-    public function getPeopleCount(): ?int
-    {
-        return $this->peopleCount;
-    }
-
-    public function setPeopleCount(int $peopleCount): self
-    {
-        $this->peopleCount = $peopleCount;
-
-        return $this;
-    }
-
     public function getMenu(): ?Menu
     {
         return $this->menu;
@@ -103,38 +87,32 @@ class Shift
         return $this;
     }
 
-    public function getRecipe(): ?Recipe
-    {
-        return $this->recipe;
-    }
-
-    public function setRecipe(?Recipe $recipe): self
-    {
-        $this->recipe = $recipe;
-
-        return $this;
-    }
-
     /**
-     * @return Collection|Recipe[]
+     * @return Collection|Dish[]
      */
-    public function getRecipes(): Collection
+    public function getDishes(): Collection
     {
-        return $this->recipes;
+        return $this->dishes;
     }
 
-    public function addRecipe(Recipe $recipe): self
+    public function addDish(Dish $dish): self
     {
-        if (!$this->recipes->contains($recipe)) {
-            $this->recipes[] = $recipe;
+        if (!$this->dishes->contains($dish)) {
+            $this->dishes[] = $dish;
+            $dish->setShift($this);
         }
 
         return $this;
     }
 
-    public function removeRecipe(Recipe $recipe): self
+    public function removeDish(Dish $dish): self
     {
-        $this->recipes->removeElement($recipe);
+        if ($this->dishes->removeElement($dish)) {
+            // set the owning side to null (unless already changed)
+            if ($dish->getShift() === $this) {
+                $dish->setShift(null);
+            }
+        }
 
         return $this;
     }

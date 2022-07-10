@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Dish;
 use App\Entity\Menu;
 use App\Entity\Shift;
 use App\Form\MenuType;
@@ -37,16 +38,21 @@ class MenuController extends AbstractController
         foreach(Shift::SHIFT_IDENTIFIER as $shiftIdentifier) {
             $shift = new Shift();
             $shift->setIdentifier($shiftIdentifier);
-            $shift->setPeopleCount(0);
             $menu->addShift($shift);
         }
         $form = $this->createForm(MenuType::class, $menu);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($menu->getShifts() as $shift) {
+                foreach ($shift->getDishes() as $dish) {
+                    $dish->setShift($shift);
+                }
+            }
             $entityManager->persist($menu);
             $entityManager->flush();
             return $this->redirectToRoute('menu_index');
         }
+//        dd($form);
         return $this->render('menu/new.html.twig', [
             'form' => $form->createView(),
         ]);

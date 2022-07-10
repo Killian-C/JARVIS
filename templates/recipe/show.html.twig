@@ -6,6 +6,9 @@
     <a class="p-2" href="{{ path('recipe_index') }}">Retour à la liste des recettes</a>
     <h4 class="text-center mt-4">{{ recipe.title }}</h4>
     <p class="text-center text-primary mb-4">(pour 1 personne)</p>
+    {% if recipe.season %}
+        <p class="text-center text-primary mb-4">Saison : {{ recipe.season.name }}</p>
+    {% endif %}
     <form action="{{ path('recipe_edit', {'id': recipe.id}) }}" method="post" class="text-center">
         <button class="btn btn-primary">Mettre à jour cette recette</button>
     </form>

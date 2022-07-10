@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Créer un nouveau menu{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('dishEmbedForm') }}
+{% endblock %}
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
     <a class="p-3" href="{{ path('menu_index') }}">Retourner à la liste des menus</a>
@@ -16,7 +20,14 @@
         {% for shift in form.shifts %}
             <div class="alert alert-info">
                 <div class="text-center font-weight-bold">{{ shift.vars.data.identifier }}</div>
-                {{ form_widget(shift) }}
+                <ul data-block-id="{{ loop.index }}" class="dishes dishes-block" data-prototype="{{ form_widget(shift.dishes.vars.prototype)|e('html_attr') }}">
+                    {% for dish in shift.dishes %}
+                        <li>
+                            {{ form_widget(dish) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button id="btn-{{ loop.index }}" data-dish-index="0" type="button" class="add-dish add_item_link btn btn-secondary" data-collection-holder-class="dishes">Ajouter un plat</button>
             </div>
         {% endfor %}
         <div class="text-center mb-5">

@@ -45,15 +45,9 @@ class Recipe
      */
     private $season;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Shift::class, mappedBy="recipes")
-     */
-    private $shifts;
-
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
-        $this->shifts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,36 +103,6 @@ class Recipe
             // set the owning side to null (unless already changed)
             if ($ingredient->getRecipe() === $this) {
                 $ingredient->setRecipe(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Shift[]
-     */
-    public function getShifts(): Collection
-    {
-        return $this->shifts;
-    }
-
-    public function addShift(Shift $shift): self
-    {
-        if (!$this->shifts->contains($shift)) {
-            $this->shifts[] = $shift;
-            $shift->setRecipe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeShift(Shift $shift): self
-    {
-        if ($this->shifts->removeElement($shift)) {
-            // set the owning side to null (unless already changed)
-            if ($shift->getRecipe() === $this) {
-                $shift->setRecipe(null);
             }
         }
 

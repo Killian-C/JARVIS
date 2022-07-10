@@ -21,7 +21,8 @@ Encore
      * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
-    .addEntry('form', './assets/form.js')
+    .addEntry('ingredientEmbedForm', './assets/ingredientEmbedForm.js')
+    .addEntry('dishEmbedForm', './assets/dishEmbedForm.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
