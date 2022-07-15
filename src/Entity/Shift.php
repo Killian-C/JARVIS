@@ -29,6 +29,16 @@ class Shift
         'Dimanche soir',
     ];
 
+    public const DAYS_INDEX_SHIFT_INDENTIFIER = [
+        'Monday'    => 0,
+        'Tuesday'   => 2,
+        'Wednesday' => 4,
+        'Thursday'  => 6,
+        'Friday'    => 8,
+        'Saturday'  => 10,
+        'Sunday'    => 12,
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

@@ -6,14 +6,16 @@ use App\Repository\MenuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=MenuRepository::class)
  */
 class Menu
 {
-    public const NB_MIN_DAY       = 0;
-    public const NB_MAX_DAY       = 6;
+//    public const NB_MIN_DAY       = 0;
+//    public const NB_MAX_DAY       = 6;
     public const NB_SHIFT_PER_DAY = 2;
 
     /**
@@ -46,6 +48,21 @@ class Menu
     public function __construct()
     {
         $this->shifts = new ArrayCollection();
+    }
+
+    /**
+     * @Assert\Callback
+     * @param ExecutionContextInterface $context
+     * @param $payload
+     */
+    public function validateFinishedAtDate(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->getFinishedAt() < $this->getStartedAt()) {
+            $context->buildViolation('La date de fin ne peut être antérieure à la date de début !')
+                ->atPath('finishedAt')
+                ->addViolation()
+            ;
+        }
     }
 
     public function getId(): ?int

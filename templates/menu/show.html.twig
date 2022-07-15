@@ -9,7 +9,7 @@
         <a class="btn btn-primary" href="{{ path('shoppingList', {'menu_id': menu.id}) }}">Générer la liste de courses</a>
     </div>
     <div class="d-flex flex-wrap justify-content-center">
-    {% for nb_jours in constant('App\\Entity\\Menu::NB_MIN_DAY')..constant('App\\Entity\\Menu::NB_MAX_DAY') %}
+    {% for nb_jours in 0..days_count %}
         <div class="d-flex flex-column alert alert-primary mx-1">
             {% for shift in menu.shifts|slice( nb_jours * 2, constant('App\\Entity\\Menu::NB_SHIFT_PER_DAY'))  %}
                 <div class="p-3 my-1 alert alert-light text-center">

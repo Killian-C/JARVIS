@@ -5,34 +5,54 @@
     {{ parent() }}
     {{ encore_entry_script_tags('dishEmbedForm') }}
 {% endblock %}
-{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% if date_step %}
+    {% form_theme form_date_step 'bootstrap_4_layout.html.twig' %}
+{% else %}
+    {% form_theme form_shift_step 'bootstrap_4_layout.html.twig' %}
+{% endif %}
 {% block body %}
     <a class="p-3" href="{{ path('menu_index') }}">Retourner à la liste des menus</a>
     <h4 class="text-center my-4">
         {% block title_form %}Créer un nouveau menu{% endblock %}
     </h4>
     <div class="container">
-        {{ form_start(form) }}
-        <div class="my-4 alert alert-primary">
-            {{ form_row(form.startedAt) }}
-            {{ form_row(form.finishedAt) }}
-        </div>
-        {% for shift in form.shifts %}
-            <div class="alert alert-info">
-                <div class="text-center font-weight-bold">{{ shift.vars.data.identifier }}</div>
-                <ul data-block-id="{{ loop.index }}" class="dishes dishes-block" data-prototype="{{ form_widget(shift.dishes.vars.prototype)|e('html_attr') }}">
-                    {% for dish in shift.dishes %}
-                        <li>
-                            {{ form_widget(dish) }}
-                        </li>
-                    {% endfor %}
-                </ul>
-                <button id="btn-{{ loop.index }}" data-dish-index="0" type="button" class="add-dish add_item_link btn btn-secondary" data-collection-holder-class="dishes">Ajouter un plat</button>
+        {% if date_step %}
+            {{ form_start(form_date_step) }}
+            <div class="my-4 alert alert-primary">
+                {{ form_row(form_date_step.startedAt) }}
+                {{ form_row(form_date_step.finishedAt) }}
             </div>
-        {% endfor %}
-        <div class="text-center mb-5">
-            <input class="btn btn-primary" type="submit" value="{% block text_button %}Générer ce menu{% endblock %}">
-        </div>
-        {{ form_end(form) }}
+            <div class="text-center mb-5">
+                <input class="btn btn-primary" type="submit" value="Compléter un menu à ces dates">
+            </div>
+            {{ form_end(form_date_step) }}
+        {% endif %}
+
+        {% if date_step == false %}
+            {{ form_start(form_shift_step) }}
+            <div class="my-4 alert alert-primary">
+                {{ form_row(form_shift_step.startedAt) }}
+                {{ form_row(form_shift_step.finishedAt) }}
+            </div>
+            {% for shift in form_shift_step.shifts %}
+                <div class="alert alert-info">
+                    <div class="text-center font-weight-bold">{{ shift.vars.data.identifier }}</div>
+                    {{ form_row(shift.identifier, {'value' : shift.vars.data.identifier}) }}
+                    <ul data-block-id="{{ loop.index }}" class="dishes dishes-block" data-prototype="{{ form_widget(shift.dishes.vars.prototype)|e('html_attr') }}">
+                        {% for dish in shift.dishes %}
+                            <li>
+                                {{ form_widget(dish) }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <button id="btn-{{ loop.index }}" data-dish-index="0" type="button" class="add-dish add_item_link btn btn-secondary" data-collection-holder-class="dishes">Ajouter un plat</button>
+                </div>
+            {% endfor %}
+            <div class="text-center mb-5">
+                <input class="btn btn-primary" type="submit" value="{% block text_button %}Générer ce menu{% endblock %}">
+            </div>
+            <div class="d-none">{{ form_rest(form_shift_step) }}</div>
+            {{ form_end(form_shift_step) }}
+        {% endif %}
     </div>
 {% endblock %}

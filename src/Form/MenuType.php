@@ -25,6 +25,7 @@ class MenuType extends AbstractType
             ])
             ->add('shifts', CollectionType::class, [
                 'entry_type'   => ShiftType::class,
+                'allow_add'    => true
             ])
         ;
     }

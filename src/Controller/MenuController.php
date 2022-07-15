@@ -5,10 +5,15 @@ namespace App\Controller;
 use App\Entity\Dish;
 use App\Entity\Menu;
 use App\Entity\Shift;
+use App\Form\MenuDateStepType;
 use App\Form\MenuType;
 use App\Repository\MenuRepository;
+use App\Service\MenuService;
+use App\Service\ShiftService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,19 +36,38 @@ class MenuController extends AbstractController
 
     /**
      * @Route("/new", name="new")
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param ShiftService $shiftService
+     * @return Response
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ShiftService $shiftService): Response
     {
-        $menu = new Menu();
-        foreach(Shift::SHIFT_IDENTIFIER as $shiftIdentifier) {
-            $shift = new Shift();
-            $shift->setIdentifier($shiftIdentifier);
-            $menu->addShift($shift);
+        $menu          = new Menu();
+        $formDateStep  = $this->createForm(MenuDateStepType::class, $menu);
+        $formShiftStep = $this->createForm(MenuType::class, $menu);
+
+        $formDateStep->handleRequest($request);
+        if ($formDateStep->isSubmitted() && $formDateStep->isValid()) {
+            $start  = $menu->getStartedAt();
+            $end    = $menu->getFinishedAt();
+            $shifts = $shiftService->getShiftsByMenuDates($start, $end);
+            foreach($shifts as $shiftIdentifier) {
+                $shift = new Shift();
+                $shift->setIdentifier($shiftIdentifier);
+                $menu->addShift($shift);
+            }
+            $formShiftStep = $this->createForm(MenuType::class, $menu);
+            return $this->render('menu/new.html.twig', [
+                'form_shift_step' => $formShiftStep->createView(),
+                'date_step' => false
+            ]);
         }
-        $form = $this->createForm(MenuType::class, $menu);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+
+        $formShiftStep->handleRequest($request);
+        if ($formShiftStep->isSubmitted() && $formShiftStep->isValid()) {
             foreach ($menu->getShifts() as $shift) {
+                $shift->setMenu($menu);
                 foreach ($shift->getDishes() as $dish) {
                     $dish->setShift($shift);
                 }
@@ -52,9 +76,10 @@ class MenuController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('menu_index');
         }
-//        dd($form);
+
         return $this->render('menu/new.html.twig', [
-            'form' => $form->createView(),
+            'form_date_step' => $formDateStep->createView(),
+            'date_step'      => true
         ]);
     }
 
@@ -63,8 +88,10 @@ class MenuController extends AbstractController
      */
     public function show(Menu $menu)
     {
+        $daysCount = (count($menu->getShifts()) - 1) / 2;
         return $this->render('menu/show.html.twig', [
-           'menu' => $menu,
+            'days_count' => $daysCount,
+            'menu'       => $menu
         ]);
     }
 
