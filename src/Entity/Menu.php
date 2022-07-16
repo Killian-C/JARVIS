@@ -14,8 +14,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class Menu
 {
-//    public const NB_MIN_DAY       = 0;
-//    public const NB_MAX_DAY       = 6;
+    public const WEEK_COUNT_DAYS  = 7;
     public const NB_SHIFT_PER_DAY = 2;
 
     /**
@@ -48,6 +47,11 @@ class Menu
     public function __construct()
     {
         $this->shifts = new ArrayCollection();
+    }
+
+    public function getShiftsInWeeks()
+    {
+        return array_chunk((array) $this->getShifts()->getValues(), self::WEEK_COUNT_DAYS * 2);
     }
 
     /**

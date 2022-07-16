@@ -88,9 +88,7 @@ class MenuController extends AbstractController
      */
     public function show(Menu $menu)
     {
-        $daysCount = (count($menu->getShifts()) - 1) / 2;
         return $this->render('menu/show.html.twig', [
-            'days_count' => $daysCount,
             'menu'       => $menu
         ]);
     }
