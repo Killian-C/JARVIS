@@ -42,10 +42,10 @@ class ShiftService
      * @param DateTime $endDate
      * @return array
      */
-    private function shiftLooper(int $startKeyLoop, DateTime &$firstDate, DateTime $endDate): array
+    private function shiftLooper(int $startKeyLoop, DateTime $firstDate, DateTime $endDate): array
     {
         $shifts = [];
-        for ($i = $startKeyLoop; $i < count(Shift::SHIFT_IDENTIFIER); $i++) {
+        for ($i = $startKeyLoop, $iMax = count(Shift::SHIFT_IDENTIFIER); $i < $iMax; $i++) {
             if ($firstDate > $endDate) {
                 break;
             }
