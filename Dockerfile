@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libxml2-dev \
     libicu-dev \
+    gnupg \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ## Vérifier que les dépendances système requises pour l'extension GD sont installées
@@ -39,6 +40,11 @@ RUN composer install \
     --no-scripts \
     --prefer-dist \
     --quiet
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt update
+RUN yes | apt install yarn
 
 
 # Copier tous les fichiers de l'application dans le conteneur
