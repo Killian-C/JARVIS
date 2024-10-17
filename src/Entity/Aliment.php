@@ -45,9 +45,9 @@ class Aliment
      */
     private $shopPlace;
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->getName();
+        return $this->getName() ?? 'anonymous_aliment';
     }
 
     public function getNameAndUnit()

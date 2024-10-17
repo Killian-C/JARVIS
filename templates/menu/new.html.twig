@@ -45,6 +45,13 @@
                             </li>
                         {% endfor %}
                     </ul>
+                    <datalist id="recipeList">
+                        {% for recipe in recipes %}
+                            <option value="{{ recipe }}">
+                                {{ recipe }}
+                            </option>
+                        {% endfor %}
+                    </datalist>
                     <button id="btn-{{ loop.index }}" data-dish-index="0" type="button" class="add-dish add_item_link btn btn-secondary" data-collection-holder-class="dishes">Ajouter un plat</button>
                 </div>
             {% endfor %}

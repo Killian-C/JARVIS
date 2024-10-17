@@ -50,6 +50,11 @@ class Recipe
         $this->ingredients = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->getTitle() ?? 'anonymous_recipe';
+    }
+
     public function getId(): ?int
     {
         return $this->id;

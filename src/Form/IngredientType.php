@@ -12,14 +12,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class IngredientType extends AbstractType
 {
 
-    private  $transformer;
+    private AlimentToNameTransformer $transformer;
 
     public function __construct(AlimentToNameTransformer $alimentTransformer)
     {
         $this->transformer = $alimentTransformer;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('aliment', TextType::class,
@@ -37,7 +37,7 @@ class IngredientType extends AbstractType
 
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Ingredient::class,

@@ -8,6 +8,7 @@ use App\Entity\Shift;
 use App\Form\MenuDateStepType;
 use App\Form\MenuType;
 use App\Repository\MenuRepository;
+use App\Repository\RecipeRepository;
 use App\Service\MenuService;
 use App\Service\ShiftService;
 use DateTime;
@@ -41,7 +42,7 @@ class MenuController extends AbstractController
      * @param ShiftService $shiftService
      * @return Response
      */
-    public function new(Request $request, EntityManagerInterface $entityManager, ShiftService $shiftService): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ShiftService $shiftService, RecipeRepository $recipeRepository): Response
     {
         $menu          = new Menu();
         $formDateStep  = $this->createForm(MenuDateStepType::class, $menu);
@@ -58,9 +59,11 @@ class MenuController extends AbstractController
                 $menu->addShift($shift);
             }
             $formShiftStep = $this->createForm(MenuType::class, $menu);
+            $recipes       = $recipeRepository->findBy([], [ 'title' => 'ASC' ]);
             return $this->render('menu/new.html.twig', [
                 'form_shift_step' => $formShiftStep->createView(),
-                'date_step' => false
+                'date_step'       => false,
+                'recipes'         => $recipes,
             ]);
         }
 
@@ -86,10 +89,11 @@ class MenuController extends AbstractController
     /**
      * @Route("/show/{id}", name="show")
      */
-    public function show(Menu $menu)
+    public function show(Menu $menu): Response
     {
+        //TODO faire une méthode prepareShiftsToRender pour limiter la logique dans le twig, gros cochon
         return $this->render('menu/show.html.twig', [
-            'menu'       => $menu
+            'menu' => $menu
         ]);
     }
 

@@ -49,7 +49,7 @@ class Menu
         $this->shifts = new ArrayCollection();
     }
 
-    public function getShiftsInWeeks()
+    public function getShiftsInWeeks(): array
     {
         return array_chunk((array) $this->getShifts()->getValues(), self::WEEK_COUNT_DAYS * 2);
     }
