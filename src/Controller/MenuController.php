@@ -40,6 +40,7 @@ class MenuController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @param ShiftService $shiftService
+     * @param RecipeRepository $recipeRepository
      * @return Response
      */
     public function new(Request $request, EntityManagerInterface $entityManager, ShiftService $shiftService, RecipeRepository $recipeRepository): Response
@@ -100,19 +101,30 @@ class MenuController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit", methods={"POST"})
      */
-    public function edit(Menu $menu, EntityManagerInterface $entityManager, Request $request): Response
+    public function edit(Menu $menu, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository): Response
     {
         $form = $this->createForm(MenuType::class, $menu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($menu->getShifts() as $shift) {
+                $shift->setMenu($menu);
+                foreach ($shift->getDishes() as $dish) {
+                    $dish->setShift($shift);
+                }
+                $entityManager->persist($shift);
+            }
             $entityManager->flush();
             $this->redirectToRoute('menu_index');
         }
 
+        $recipes = $recipeRepository->findBy([], [ 'title' => 'ASC' ]);
+
         return $this->render('menu/edit.html.twig', [
-            'menu' => $menu,
-            'form' => $form->createView(),
+            'menu'            => $menu,
+            'form_shift_step' => $form->createView(),
+            'date_step'       => false,
+            'recipes'         => $recipes,
         ]);
     }
 
@@ -121,6 +133,20 @@ class MenuController extends AbstractController
      */
     public function delete(Menu $menu, EntityManagerInterface $entityManager): Response
     {
+        $shifts = $menu->getShifts();
+        foreach ($shifts as $shift) {
+            $dishes = $shift->getDishes();
+            foreach ($dishes as $dish) {
+                $entityManager->remove($dish);
+            }
+            $entityManager->remove($shift);
+        }
+
+        $shoppingList = $menu->getShoppinglist();
+        if ($shoppingList) {
+            $entityManager->remove($shoppingList);
+        }
+
         $entityManager->remove($menu);
         $entityManager->flush();
         return $this->redirectToRoute('menu_index');

@@ -27,22 +27,22 @@ class Menu
     /**
      * @ORM\Column(type="date")
      */
-    private $startedAt;
+    private ?\DateTimeInterface $startedAt;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $finishedAt;
+    private ?\DateTimeInterface $finishedAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Shift::class, mappedBy="menu", orphanRemoval=true, cascade={"persist"})
      */
-    private $shifts;
+    private Collection $shifts;
 
     /**
      * @ORM\OneToOne(targetEntity=ShoppingList::class, inversedBy="menu", cascade={"persist", "remove"})
      */
-    private $shoppinglist;
+    private ?ShoppingList $shoppinglist;
 
     public function __construct()
     {
@@ -59,7 +59,7 @@ class Menu
      * @param ExecutionContextInterface $context
      * @param $payload
      */
-    public function validateFinishedAtDate(ExecutionContextInterface $context, $payload)
+    public function validateFinishedAtDate(ExecutionContextInterface $context, $payload): void
     {
         if ($this->getFinishedAt() < $this->getStartedAt()) {
             $context->buildViolation('La date de fin ne peut être antérieure à la date de début !')

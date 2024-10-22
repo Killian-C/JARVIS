@@ -49,22 +49,21 @@ class Shift
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $identifier;
+    private ?string $identifier;
 
     /**
      * @ORM\ManyToOne(targetEntity=Menu::class, inversedBy="shifts")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $menu;
+    private ?Menu $menu;
 
     /**
      * @ORM\OneToMany(targetEntity=Dish::class, mappedBy="shift", cascade={"persist"})
      */
-    private $dishes;
+    private Collection $dishes;
 
     public function __construct()
     {
-        $this->recipes = new ArrayCollection();
         $this->dishes = new ArrayCollection();
     }
 
