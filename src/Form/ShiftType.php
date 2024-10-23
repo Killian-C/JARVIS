@@ -20,15 +20,17 @@ class ShiftType extends AbstractType
             ->add('identifier', HiddenType::class)
             ->add('dishes', CollectionType::class, [
                 'entry_type' => DishType::class,
-                'allow_add'  => true
+                'allow_add'  => true,
+                'entry_options' => [MenuType::OPT_KEY_MODE => $options[MenuType::OPT_KEY_MODE]]
             ])
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Shift::class,
+            'data_class'           => Shift::class,
+            MenuType::OPT_KEY_MODE => MenuType::OPT_ARG_MODE_EDIT
         ]);
     }
 }

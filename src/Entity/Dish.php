@@ -21,18 +21,18 @@ class Dish
      * @ORM\ManyToOne(targetEntity=Shift::class, inversedBy="dishes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $shift;
+    private ?Shift $shift;
 
     /**
      * @ORM\ManyToOne(targetEntity=Recipe::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $recipe;
+    private ?Recipe $recipe;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $peopleCount;
+    private ?int $peopleCount;
 
     public function getId(): ?int
     {

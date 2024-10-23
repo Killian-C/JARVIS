@@ -45,9 +45,10 @@ class MenuController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $entityManager, ShiftService $shiftService, RecipeRepository $recipeRepository): Response
     {
-        $menu          = new Menu();
-        $formDateStep  = $this->createForm(MenuDateStepType::class, $menu);
-        $formShiftStep = $this->createForm(MenuType::class, $menu);
+        $menu            = new Menu();
+        $menuTypeOptions = [ MenuType::OPT_KEY_MODE => MenuType::OPT_ARG_MODE_NEW ];
+        $formDateStep    = $this->createForm(MenuDateStepType::class, $menu);
+        $formShiftStep   = $this->createForm(MenuType::class, $menu, $menuTypeOptions);
 
         $formDateStep->handleRequest($request);
         if ($formDateStep->isSubmitted() && $formDateStep->isValid()) {
@@ -59,7 +60,7 @@ class MenuController extends AbstractController
                 $shift->setIdentifier($shiftIdentifier);
                 $menu->addShift($shift);
             }
-            $formShiftStep = $this->createForm(MenuType::class, $menu);
+            $formShiftStep = $this->createForm(MenuType::class, $menu,$menuTypeOptions);
             $recipes       = $recipeRepository->findBy([], [ 'title' => 'ASC' ]);
             return $this->render('menu/new.html.twig', [
                 'form_shift_step' => $formShiftStep->createView(),

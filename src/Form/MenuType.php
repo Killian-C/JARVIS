@@ -12,7 +12,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MenuType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public const OPT_KEY_MODE = 'mode';
+    public const OPT_ARG_MODE_NEW = 'new';
+    public const OPT_ARG_MODE_EDIT = 'edit';
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('startedAt', DateType::class, [
@@ -24,16 +28,18 @@ class MenuType extends AbstractType
                 'label'  => 'Fini le'
             ])
             ->add('shifts', CollectionType::class, [
-                'entry_type'   => ShiftType::class,
-                'allow_add'    => true
+                'entry_type' => ShiftType::class,
+                'allow_add'  => true,
+                'entry_options' => [self::OPT_KEY_MODE => $options[self::OPT_KEY_MODE]]
             ])
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Menu::class,
+            'data_class'       => Menu::class,
+            self::OPT_KEY_MODE => self::OPT_ARG_MODE_EDIT
         ]);
     }
 }
