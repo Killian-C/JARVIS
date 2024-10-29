@@ -32,8 +32,7 @@ class ShiftService
             $allShifts[] = $this->shiftLooper($startKeyLoop, $startAt, $end);
         }
 
-        $allShifts = array_merge([], ...$allShifts);
-        return $allShifts;
+        return array_merge([], ...$allShifts);
     }
 
     /**

@@ -74,4 +74,9 @@ class Dish
 
         return $this;
     }
+
+    public function getIngredients()
+    {
+        return $this->getRecipe() ? $this->getRecipe()->getIngredients() : [];
+    }
 }

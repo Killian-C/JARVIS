@@ -16,23 +16,24 @@ class ShoppingListController extends AbstractController
      */
     public function index(Menu $menu): Response
     {
-        $currentShifts = $menu->getShifts();
+        $currentShifts     = $menu->getShifts();
         $listOfIngredients = [];
-        $occurrenceArray = [];
+        $occurrenceArray   = [];
 
         foreach ($currentShifts as $shift) {
-            if ($shift->getRecipe()) {
-                $allIngredients = $shift->getRecipe()->getIngredients();
-                foreach ($allIngredients as $ingredient) {
-                    if (!in_array($ingredient->getAliment(), $occurrenceArray)) {
-                        $newQuantity = $ingredient->getQuantity() * $shift->getPeopleCount();
+            $dishes = $shift->getDishes();
+            if ($dishes) {
+                foreach ($dishes as $dish) {
+                    $allIngredients = $dish->getIngredients();
+                    foreach ($allIngredients as $ingredient) {
+                        $newQuantity = $ingredient->getQuantity() * $dish->getPeopleCount();
                         $alimentName = $ingredient->getAliment()->getNameAndUnit();
-                        $listOfIngredients[$alimentName] = $newQuantity;
-                        $occurrenceArray[] = $ingredient->getAliment();
-                    } else {
-                        $newQuantity = $ingredient->getQuantity() * $shift->getPeopleCount();
-                        $alimentName = $ingredient->getAliment()->getNameAndUnit();
-                        $listOfIngredients[$alimentName] += $newQuantity;
+                        if (!in_array($ingredient->getAliment(), $occurrenceArray, true)) {
+                            $listOfIngredients[$alimentName] = $newQuantity;
+                            $occurrenceArray[] = $ingredient->getAliment();
+                        } else {
+                            $listOfIngredients[$alimentName] += $newQuantity;
+                        }
                     }
                 }
             }

@@ -36,11 +36,9 @@ class DishType extends AbstractType
 
         $builder
             ->add('recipe', TextType::class, [
-//                TODO traiter le label, etc. on a un vieux point avec le mot recipe ici
-//                'class'        => Recipe::class,
-//                'choice_label' => 'title',
-//                'placeholder'  => 'Sélectionner une recette'
-                'attr' => [ 'list' => 'recipeList' ]
+                'label'      => 'Sélectionner une recette',
+                'label_attr' => [ 'class' => 'recipe-label' ],
+                'attr'       => [ 'list'  => 'recipeList' ],
             ])
             ->add('peopleCount', IntegerType::class, $peopleCountTypeOptions)
         ;

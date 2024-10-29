@@ -40,7 +40,7 @@
                     {{ form_row(shift.identifier, {'value' : shift.vars.data.identifier}) }}
                     <ul data-block-id="{{ loop.index }}" class="dishes dishes-block" data-prototype="{{ form_widget(shift.dishes.vars.prototype)|e('html_attr') }}">
                         {% for dish in shift.dishes %}
-                            <li>
+                            <li class="dish-form">
                                 {{ form_widget(dish) }}
                             </li>
                         {% endfor %}

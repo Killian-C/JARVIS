@@ -9,6 +9,7 @@ dishBlocks.forEach( container => {
         dishCount++;
         addButton.setAttribute('data-dish-index', dishCount);
         let listedForm       = document.createElement('li');
+        listedForm.classList.add('dish-form');
         const regexDish      = /__name__/g;
         let newDishForm      = dishForm.replace(regexDish, 'dish_' + dishCount);
         listedForm.innerHTML = newDishForm;

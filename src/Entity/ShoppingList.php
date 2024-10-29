@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ShoppingListRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,12 +22,22 @@ class ShoppingList
     /**
      * @ORM\Column(type="text")
      */
-    private $content;
+    private ?string $content;
 
     /**
      * @ORM\OneToOne(targetEntity=Menu::class, mappedBy="shoppinglist", cascade={"persist", "remove"})
      */
-    private $menu;
+    private ?Menu $menu;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ListItem::class, mappedBy="shoppingList", orphanRemoval=true)
+     */
+    private $listItems;
+
+    public function __construct()
+    {
+        $this->listItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -62,6 +74,36 @@ class ShoppingList
         }
 
         $this->menu = $menu;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ListItem>
+     */
+    public function getListItems(): Collection
+    {
+        return $this->listItems;
+    }
+
+    public function addListItem(ListItem $listItem): self
+    {
+        if (!$this->listItems->contains($listItem)) {
+            $this->listItems[] = $listItem;
+            $listItem->setShoppingList($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListItem(ListItem $listItem): self
+    {
+        if ($this->listItems->removeElement($listItem)) {
+            // set the owning side to null (unless already changed)
+            if ($listItem->getShoppingList() === $this) {
+                $listItem->setShoppingList(null);
+            }
+        }
 
         return $this;
     }
