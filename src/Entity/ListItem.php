@@ -30,7 +30,7 @@ class ListItem
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private ?bool $checked;
+    private ?bool $checked = false;
 
     /**
      * @ORM\ManyToOne(targetEntity=ShoppingList::class, inversedBy="listItems")

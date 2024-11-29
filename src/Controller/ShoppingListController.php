@@ -7,7 +7,9 @@ use App\Entity\Menu;
 use App\Entity\ShoppingList;
 use App\Form\ShoppingListType;
 use App\Repository\ListItemRepository;
+use App\Repository\MenuRepository;
 use App\Repository\ShoppingListRepository;
+use App\Service\ListItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -82,6 +84,38 @@ class ShoppingListController extends AbstractController
     /**
      * @param Request $request
      * @param EntityManagerInterface $em
+     * @param ShoppingListRepository $shoppingListRepository
+     * @param ListItemService $listItemService
+     * @param Menu $menu
+     * @return Response
+     * @Route("/add-items-from-menu/{menu_id}", name="add_items_from_menu")
+     * @ParamConverter("menu", options={"mapping": {"menu_id": "id"}})
+     */
+    public function addItemsFromMenu(
+        Request $request,
+        EntityManagerInterface $em,
+        ShoppingListRepository $shoppingListRepository,
+        ListItemService $listItemService,
+        Menu $menu
+    ): Response
+    {
+        //On est sensé n'avoir qu'une seule liste de course
+        $shoppingList = $shoppingListRepository->findAll()[0];
+        $listItems    = $listItemService->extractItemsFromMenu($menu, $shoppingList);
+
+        foreach ($listItems as $listItem) {
+            $em->persist($listItem);
+        }
+
+        $em->flush();
+
+        return $this->redirectToRoute('shopping_list_index');
+    }
+
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
      * @param ListItemRepository $listItemRepository
      * @param ListItem $listItem
      * @return Response
@@ -141,38 +175,4 @@ class ShoppingListController extends AbstractController
         return new JsonResponse(null, Response::HTTP_BAD_REQUEST);
     }
 
-//    /**
-//     * @Route("/{menu_id}", name="index")
-//     * @ParamConverter("menu", options={"mapping": {"menu_id": "id"}})
-//     */
-//    public function index(Menu $menu): Response
-//    {
-//        $currentShifts     = $menu->getShifts();
-//        $listOfIngredients = [];
-//        $occurrenceArray   = [];
-//
-//        foreach ($currentShifts as $shift) {
-//            $dishes = $shift->getDishes();
-//            if ($dishes) {
-//                foreach ($dishes as $dish) {
-//                    $allIngredients = $dish->getIngredients();
-//                    foreach ($allIngredients as $ingredient) {
-//                        $newQuantity = $ingredient->getQuantity() * $dish->getPeopleCount();
-//                        $alimentName = $ingredient->getAliment()->getNameAndUnit();
-//                        if (!in_array($ingredient->getAliment(), $occurrenceArray, true)) {
-//                            $listOfIngredients[$alimentName] = $newQuantity;
-//                            $occurrenceArray[] = $ingredient->getAliment();
-//                        } else {
-//                            $listOfIngredients[$alimentName] += $newQuantity;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        return $this->render('shopping_list/index.html.twig', [
-//            'menu'        => $menu,
-//            'ingredients' => $listOfIngredients,
-//        ]);
-//    }
 }

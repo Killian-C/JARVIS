@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Entity\Shift;
+use DateMalformedStringException;
 use DateTime;
 
 class ShiftService
@@ -15,6 +16,7 @@ class ShiftService
      * @param DateTime $start
      * @param DateTime $end
      * @return array
+     * @throws DateMalformedStringException
      */
     public function getShiftsByMenuDates(DateTime $start, DateTime $end): array
     {
@@ -40,6 +42,7 @@ class ShiftService
      * @param DateTime $firstDate
      * @param DateTime $endDate
      * @return array
+     * @throws DateMalformedStringException
      */
     private function shiftLooper(int $startKeyLoop, DateTime $firstDate, DateTime $endDate): array
     {
