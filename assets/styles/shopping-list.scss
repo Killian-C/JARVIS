@@ -2,11 +2,24 @@
   padding: 2%;
   background-color: #ffffa5;
   box-shadow: 2px 4px 6px #444;
-  transform: rotate(2deg);
   border-bottom-right-radius: 60px 10px;
   max-width: 20rem;
+
+  li {
+    list-style-type: none;
+  }
+
+  .checked-item {
+    color: grey;
+    text-decoration: line-through;
+  }
+
 }
 
-.shopping-list-item:hover {
-  cursor: pointer;
+.shopping-list-item {
+  margin-bottom: 0;
+  padding-right: 0.5em;
+  &:hover {
+    cursor: pointer;
+  }
 }

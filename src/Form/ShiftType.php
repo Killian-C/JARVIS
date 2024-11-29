@@ -17,11 +17,14 @@ class ShiftType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('identifier', HiddenType::class)
+            ->add('identifier', HiddenType::class, [
+                'label' => false,
+            ])
             ->add('dishes', CollectionType::class, [
-                'entry_type' => DishType::class,
-                'allow_add'  => true,
-                'entry_options' => [MenuType::OPT_KEY_MODE => $options[MenuType::OPT_KEY_MODE]]
+                'entry_type'    => DishType::class,
+                'allow_add'     => true,
+                'entry_options' => [MenuType::OPT_KEY_MODE => $options[MenuType::OPT_KEY_MODE]],
+                'label'         => false,
             ])
         ;
     }

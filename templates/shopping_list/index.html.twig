@@ -1,15 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste de course{% endblock %}
+{% block title %}Liste de courses{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('listItemsIsCheckedAjax') }}
+{#    {{ encore_entry_script_tags('listItemsDeleteAjax') }}#}
+{% endblock %}
 
 {% block body %}
-    <a class="p-3" href="{{ path('menu_show', {'id': menu.id}) }}">Retour au menu</a>
-    <h4 class="text-center my-4">Liste de course de la semaine du {{ menu.startedAt|date('d/m/Y') }} au {{ menu.finishedAt|date('d/m/Y') }}</h4>
-    <div class="shopping-list container alert alert-warning w-75">
-        {% for ingredient, quantity in ingredients %}
-            <div>
-                <input type="checkbox" id="{{ ingredient }}">
-                <label class="shopping-list-item text-dark font-weight-bold" for="{{ ingredient }}">{{ ingredient }} x {{ quantity }}</label>
+    <div class="d-flex align-items-center justify-content-center">
+        <h4 class="text-center my-4">Liste de course</h4>
+        <form action="{{ path('shopping_list_edit', {'id': shopping_list.id}) }}" method="post" class="ml-3">
+            <button class="btn btn-secondary">📝</button>
+        </form>
+    </div>
+    <div id="list-items-container" class="shopping-list container alert alert-warning w-75 d-flex flex-column justify-content-around align-content-center">
+        {% for list_item in shopping_list.listItems %}
+            <div class="d-flex align-items-center mb-3">
+                <input class="js-checkbox d-none"
+                       type="checkbox"
+                       id="list-item-{{ list_item.id }}-input"
+                       data-list-item-id="{{ list_item.id }}" {{ list_item.checked ? 'checked' : '' }}
+                >
+                <label class="shopping-list-item font-weight-bold {{ list_item.checked ? 'checked-item' : 'text-dark' }}"
+                       id="list-item-{{ list_item.id }}-label"
+                       for="list-item-{{ list_item.id }}-input"
+                >
+                    {{ list_item.content }} x {{ list_item.quantity }}
+                </label>
+                <a href="{{ path('shopping_list_delete_list_item', { 'id': list_item.id}) }}" class="js-delete-list-item" data-list-item-id="{{ list_item.id }}">
+                    <img class="w-70" src="/images/delete-yellow-cross-2.svg" alt="">
+                </a>
             </div>
         {% endfor %}
     </div>

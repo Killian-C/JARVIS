@@ -11,8 +11,7 @@ dishBlocks.forEach( container => {
         let listedForm       = document.createElement('li');
         listedForm.classList.add('dish-form');
         const regexDish      = /__name__/g;
-        let newDishForm      = dishForm.replace(regexDish, 'dish_' + dishCount);
-        listedForm.innerHTML = newDishForm;
+        listedForm.innerHTML = dishForm.replace(regexDish, 'dish_' + dishCount);
         container.appendChild(listedForm);
     });
 });

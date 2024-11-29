@@ -23,6 +23,8 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('ingredientEmbedForm', './assets/ingredientEmbedForm.js')
     .addEntry('dishEmbedForm', './assets/dishEmbedForm.js')
+    .addEntry('listItemEmbedForm', './assets/listItemEmbedForm.js')
+    .addEntry('listItemsIsCheckedAjax', './assets/listItemIsCheckedAjax.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

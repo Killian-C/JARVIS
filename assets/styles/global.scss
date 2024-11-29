@@ -6,3 +6,13 @@ h1, h2, h3, h4, h5, h6 {
   font-family: $font-family-title;
   color: var(--primary);
 }
+
+button {
+  all: unset; /* Supprime presque tous les styles */
+  display: inline-block; /* Assure une bonne disposition */
+  cursor: pointer; /* Rétablit le comportement interactif */
+}
+
+.w-70 {
+  width: 70%;
+}

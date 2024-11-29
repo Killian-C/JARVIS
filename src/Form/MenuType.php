@@ -28,9 +28,10 @@ class MenuType extends AbstractType
                 'label'  => 'Fini le'
             ])
             ->add('shifts', CollectionType::class, [
-                'entry_type' => ShiftType::class,
-                'allow_add'  => true,
-                'entry_options' => [self::OPT_KEY_MODE => $options[self::OPT_KEY_MODE]]
+                'entry_type'    => ShiftType::class,
+                'allow_add'     => true,
+                'entry_options' => [self::OPT_KEY_MODE => $options[self::OPT_KEY_MODE]],
+                'label'         => false,
             ])
         ;
     }

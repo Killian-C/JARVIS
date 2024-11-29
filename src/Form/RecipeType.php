@@ -28,11 +28,10 @@ class RecipeType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder'  => 'Sélectionner la saison'
             ])
-            ->add('ingredients',
-                CollectionType::class,
-                [
+            ->add('ingredients',CollectionType::class,[
                     'entry_type' => IngredientType::class,
-                    'allow_add'  => true
+                    'allow_add'  => true,
+                    'label'      => false,
                 ],
             )
         ;

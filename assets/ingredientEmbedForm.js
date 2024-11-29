@@ -7,7 +7,6 @@ addIngredientButton.addEventListener('click', (e) => {
     e.preventDefault();
     index++;
     let listedForm = document.createElement('li');
-    let newIngredientForm = ingredientForm.replace(regex, 'ingredient_' + index);
-    listedForm.innerHTML = newIngredientForm;
+    listedForm.innerHTML = ingredientForm.replace(regex, 'ingredient_' + index);
     ingredientsContainer.appendChild(listedForm);
 })

@@ -15,28 +15,28 @@ class ListItem
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $content;
+    private ?string $content;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $quantity;
+    private ?float $quantity;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $checked;
+    private ?bool $checked;
 
     /**
      * @ORM\ManyToOne(targetEntity=ShoppingList::class, inversedBy="listItems")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $shoppingList;
+    private ShoppingList $shoppingList;
 
     public function getId(): ?int
     {

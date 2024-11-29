@@ -20,19 +20,9 @@ class ShoppingList
     private $id;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private ?string $content;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Menu::class, mappedBy="shoppinglist", cascade={"persist", "remove"})
-     */
-    private ?Menu $menu;
-
-    /**
      * @ORM\OneToMany(targetEntity=ListItem::class, mappedBy="shoppingList", orphanRemoval=true)
      */
-    private $listItems;
+    private Collection $listItems;
 
     public function __construct()
     {
@@ -42,40 +32,6 @@ class ShoppingList
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function setContent(string $content): self
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    public function getMenu(): ?Menu
-    {
-        return $this->menu;
-    }
-
-    public function setMenu(?Menu $menu): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($menu === null && $this->menu !== null) {
-            $this->menu->setShoppinglist(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($menu !== null && $menu->getShoppinglist() !== $this) {
-            $menu->setShoppinglist($this);
-        }
-
-        $this->menu = $menu;
-
-        return $this;
     }
 
     /**
