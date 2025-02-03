@@ -19,32 +19,19 @@ class ShopPlaceRepository extends ServiceEntityRepository
         parent::__construct($registry, ShopPlace::class);
     }
 
-    // /**
-    //  * @return ShopPlace[] Returns an array of ShopPlace objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return ShopPlace[] Returns an array of ShopPlace objects
+      */
+    public function findByItemsInList($shoppingList): array
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+            ->join('s.listItems', 'i')
+            ->andWhere('i.shoppingList = :shoppingList')
+            ->setParameter('shoppingList', $shoppingList)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?ShopPlace
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
 }

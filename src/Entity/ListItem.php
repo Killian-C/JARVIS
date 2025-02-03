@@ -38,6 +38,12 @@ class ListItem
      */
     private ShoppingList $shoppingList;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ShopPlace::class, inversedBy="listItems")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ShopPlace $shopPlace;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +93,18 @@ class ListItem
     public function setShoppingList(?ShoppingList $shoppingList): self
     {
         $this->shoppingList = $shoppingList;
+
+        return $this;
+    }
+
+    public function getShopPlace(): ?ShopPlace
+    {
+        return $this->shopPlace;
+    }
+
+    public function setShopPlace(?ShopPlace $shopPlace): self
+    {
+        $this->shopPlace = $shopPlace;
 
         return $this;
     }

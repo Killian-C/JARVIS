@@ -1,0 +1,23 @@
+{% extends 'shopping_list/index.html.twig' %}
+
+{% block sort_btn %}
+    <form action="{{ path('shopping_list_index', {'id': shopping_list.id}) }}" method="post" class="ml-3">
+        <button class="btn btn-light btn-outline-primary text-primary"><i class="fas fa-compress-arrows-alt"></i> Fusionner les listes</button>
+    </form>
+{% endblock %}
+
+{% block delete_checked_ones_btn %}
+    <form action="{{ path('shopping_list_delete_checked_list_item', {'id': shopping_list.id, 'from': 'sorted_list'}) }}" method="post" class="ml-3">
+        <button class="btn btn-primary">♻ Suppr cochés</button>
+    </form>
+{% endblock %}
+
+{% block post_it %}
+    {% for shop_place_name,list_items in shop_places %}
+        <div class="text-center">
+            <h3>{{ shop_place_name}}</h3>
+            {% include 'shopping_list/components/_list_items_post_it.html.twig' with { 'list_items': list_items } %}
+        </div>
+    {% endfor %}
+{% endblock %}
+

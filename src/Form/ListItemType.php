@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\ListItem;
+use App\Entity\ShopPlace;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -31,6 +33,11 @@ class ListItemType extends AbstractType
                     'min'   => 1,
                     'step'  => 0.1
                 ]
+            ])
+            ->add('shopPlace', EntityType::class, [
+                'class'        => ShopPlace::class,
+                'choice_label' => 'name',
+                'placeholder'  => "Lieu d'achat",
             ])
         ;
     }

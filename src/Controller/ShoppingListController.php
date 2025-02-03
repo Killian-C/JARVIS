@@ -9,6 +9,7 @@ use App\Form\ShoppingListType;
 use App\Repository\ListItemRepository;
 use App\Repository\MenuRepository;
 use App\Repository\ShoppingListRepository;
+use App\Repository\ShopPlaceRepository;
 use App\Service\ListItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
@@ -127,6 +128,86 @@ class ShoppingListController extends AbstractController
         $em->flush();
         $this->addFlash("success", "List item deleted");
         return $this->redirectToRoute('shopping_list_index');
+    }
+
+    /**
+     * @param ShoppingList $shoppingList
+     * @param EntityManagerInterface $em
+     * @param ListItemRepository $listItemRepository
+     * @param string|null $from
+     * @return Response
+     * @Route("/delete-checked-list-item/{id}/{from}", name="delete_checked_list_item")
+     */
+    public function deleteCheckedListItems(
+        ShoppingList $shoppingList,
+        EntityManagerInterface $em,
+        ListItemRepository $listItemRepository,
+        string $from = null
+    ): Response
+    {
+        $checkedListItems = $listItemRepository->findBy(['checked' => true, 'shoppingList' => $shoppingList]);
+
+        foreach ($checkedListItems as $checkedListItem) {
+            $em->remove($checkedListItem);
+        }
+
+        $em->flush();
+
+        if ($from === 'sorted_list') {
+            return $this->redirectToRoute('shopping_list_sort_list_items', [
+                'id' => $shoppingList->getId(),
+            ]);
+        }
+
+        return $this->redirectToRoute('shopping_list_index');
+    }
+
+    /**
+     * @param ShoppingList $shoppingList
+     * @param EntityManagerInterface $em
+     * @param ListItemRepository $listItemRepository
+     * @return Response
+     * @Route("/clean-shopping-list/{id}", name="clean_shopping_list")
+     */
+    public function cleanShoppingList(ShoppingList $shoppingList, EntityManagerInterface $em, ListItemRepository $listItemRepository): Response
+    {
+        $shoppingListItems = $shoppingList->getListItems();
+
+        foreach ($shoppingListItems as $listItem) {
+            $em->remove($listItem);
+        }
+
+        $em->flush();
+
+        return $this->redirectToRoute('shopping_list_index');
+    }
+
+    /**
+     * @param ShoppingList $shoppingList
+     * @param EntityManagerInterface $em
+     * @param ShopPlaceRepository $shopPlaceRepository
+     * @param ListItemRepository $listItemRepository
+     * @return Response
+     * @Route("/sort-list-items/{id}", name="sort_list_items")
+     */
+    public function displayItemsSortedByShopPlace(
+        ShoppingList $shoppingList,
+        EntityManagerInterface $em,
+        ShopPlaceRepository $shopPlaceRepository,
+        ListItemRepository $listItemRepository
+    ): Response
+    {
+        $shopPlaces = [];
+        $shopPlacesWithListItems = $shopPlaceRepository->findByItemsInList($shoppingList);
+
+        foreach ($shopPlacesWithListItems as $shopPlaceWithListItem) {
+            $shopPlaces[$shopPlaceWithListItem->getName()] = $shopPlaceWithListItem->getListItems()->toArray();
+        }
+
+        return $this->render('shopping_list/index_sorted.html.twig', [
+            'shop_places'   => $shopPlaces,
+            'shopping_list' => $shoppingList,
+        ]);
     }
 
     /**

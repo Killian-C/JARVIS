@@ -29,9 +29,15 @@ class ShopPlace
      */
     private $aliments;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ListItem::class, mappedBy="shopPlace")
+     */
+    private $listItems;
+
     public function __construct()
     {
         $this->aliments = new ArrayCollection();
+        $this->listItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +81,36 @@ class ShopPlace
             // set the owning side to null (unless already changed)
             if ($aliment->getShopPlace() === $this) {
                 $aliment->setShopPlace(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ListItem>
+     */
+    public function getListItems(): Collection
+    {
+        return $this->listItems;
+    }
+
+    public function addListItem(ListItem $listItem): self
+    {
+        if (!$this->listItems->contains($listItem)) {
+            $this->listItems[] = $listItem;
+            $listItem->setShopPlace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListItem(ListItem $listItem): self
+    {
+        if ($this->listItems->removeElement($listItem)) {
+            // set the owning side to null (unless already changed)
+            if ($listItem->getShopPlace() === $this) {
+                $listItem->setShopPlace(null);
             }
         }
 

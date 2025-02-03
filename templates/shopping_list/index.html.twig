@@ -8,30 +8,39 @@
 {% endblock %}
 
 {% block body %}
-    <div class="d-flex align-items-center justify-content-center">
-        <h4 class="text-center my-4">Liste de course</h4>
+    <div class="d-flex align-items-center justify-content-center my-4">
+        <h4 class="text-center">Liste de course</h4>
+
         <form action="{{ path('shopping_list_edit', {'id': shopping_list.id}) }}" method="post" class="ml-3">
             <button class="btn btn-secondary">📝</button>
         </form>
+
     </div>
-    <div id="list-items-container" class="shopping-list container alert alert-warning w-75 d-flex flex-column justify-content-around align-content-center">
-        {% for list_item in shopping_list.listItems %}
-            <div class="d-flex align-items-center mb-3">
-                <input class="js-checkbox d-none"
-                       type="checkbox"
-                       id="list-item-{{ list_item.id }}-input"
-                       data-list-item-id="{{ list_item.id }}" {{ list_item.checked ? 'checked' : '' }}
-                >
-                <label class="shopping-list-item font-weight-bold {{ list_item.checked ? 'checked-item' : 'text-dark' }}"
-                       id="list-item-{{ list_item.id }}-label"
-                       for="list-item-{{ list_item.id }}-input"
-                >
-                    {{ list_item.content }} x {{ list_item.quantity }}
-                </label>
-                <a href="{{ path('shopping_list_delete_list_item', { 'id': list_item.id}) }}" class="js-delete-list-item" data-list-item-id="{{ list_item.id }}">
-                    <img class="w-70" src="/images/delete-yellow-cross-2.svg" alt="">
-                </a>
-            </div>
-        {% endfor %}
+
+    <div class="d-flex align-items-center justify-content-center my-4">
+
+        {% block sort_btn %}
+            <form action="{{ path('shopping_list_sort_list_items', {'id': shopping_list.id}) }}" method="post" class="ml-3">
+                <button class="btn btn-light btn-outline-primary text-primary"><i class="fas fa-tasks mr-2"></i> Trier par lieux</button>
+            </form>
+        {% endblock %}
+
+        {% block delete_checked_ones_btn %}
+            <form action="{{ path('shopping_list_delete_checked_list_item', {'id': shopping_list.id}) }}" method="post" class="ml-3">
+                <button class="btn btn-primary">♻ Suppr cochés</button>
+            </form>
+        {% endblock %}
+
+        {% block delete_all_btn %}
+            <form action="{{ path('shopping_list_clean_shopping_list', {'id': shopping_list.id}) }}" method="post" class="ml-3">
+                <button class="btn btn-primary">🗑 Suppr tout</button>
+            </form>
+        {% endblock %}
+
     </div>
+
+    {% block post_it %}
+        {% include 'shopping_list/components/_list_items_post_it.html.twig' with { 'list_items': shopping_list.listItems } %}
+    {% endblock %}
+
 {% endblock %}
