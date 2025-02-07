@@ -43,7 +43,7 @@ class ListItemService
                     foreach ($allIngredients as $ingredient) {
 
                         $newQuantity = $ingredient->getQuantity() * $dish->getPeopleCount();
-                        $alimentName = $ingredient->getAliment()->getNameAndUnit();
+                        $alimentName = $ingredient->getAliment()->getPrettyName();
                         $items[$alimentName][self::KEY_SHOP_PLACE] = $ingredient->getAliment()->getShopPlace();
 
                         if (!in_array($ingredient->getAliment(), $occurrenceArray, true)) {

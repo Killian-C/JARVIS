@@ -18,35 +18,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class DishType extends AbstractType
 {
     public const DEFAULT_PEOPLE_COUNT = 2;
-    private RecipeToTitleTransformer $recipeToTitleTransformer;
-    public function __construct(RecipeToTitleTransformer $recipeToTitleTransformer)
-    {
-        $this->recipeToTitleTransformer = $recipeToTitleTransformer;
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var Dish $dish */
-        $dish = $builder->getData();
-
         $peopleCountTypeOptions = [ 'label' => 'Nombre de personnes' ];
         if (array_key_exists(MenuType::OPT_KEY_MODE, $options) && $options[MenuType::OPT_KEY_MODE] === MenuType::OPT_ARG_MODE_NEW) {
             $peopleCountTypeOptions['data'] = self::DEFAULT_PEOPLE_COUNT;
         }
 
         $builder
-            ->add('recipe', TextType::class, [
-                'label'      => 'Sélectionner une recette',
-                'label_attr' => [ 'class' => 'recipe-label' ],
-                'attr'       => [ 'list'  => 'recipeList' ],
+            ->add('recipe', EntityType::class, [
+                'class' => Recipe::class,
+                'choice_label' => 'title',
+                'placeholder'  => 'Choose Recipe',
             ])
             ->add('peopleCount', IntegerType::class, $peopleCountTypeOptions)
         ;
 
-        $builder
-            ->get('recipe')
-            ->addModelTransformer($this->recipeToTitleTransformer)
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

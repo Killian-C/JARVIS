@@ -25,13 +25,6 @@
                     </li>
                 {% endfor %}
             </ul>
-            <datalist id="alimentList">
-                {% for aliment in aliments %}
-                    <option value="{{ aliment }}">
-                        {{ aliment }}
-                    </option>
-                {% endfor %}
-            </datalist>
             <button id="add-ingredient" type="button" class="add_item_link btn btn-secondary" data-collection-holder-class="ingredients">Ajouter un ingrédient</button>
         </div>
         <div class="text-center my-5">

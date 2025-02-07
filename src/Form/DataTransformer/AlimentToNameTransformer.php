@@ -24,11 +24,12 @@ class AlimentToNameTransformer implements DataTransformerInterface
      */
     public function transform($value): string
     {
+        /** @var Aliment $aliment */
         $aliment = $value;// je dois faire ça à cause du contrat d'interface qui impose $value en params
         if ($aliment === null) {
             return '';
         }
-        return $aliment->getName();
+        return $aliment->getPrettyName();
     }
 
     /**
@@ -39,7 +40,7 @@ class AlimentToNameTransformer implements DataTransformerInterface
     {
         $alimentName = $value; // je dois faire ça à cause du contrat d'interface qui impose $value en params
         /** @var Aliment $aliment */
-        $aliment = $this->em->getRepository(Aliment::class)->findOneBy([ 'name' => $alimentName ]);
+        $aliment = $this->em->getRepository(Aliment::class)->findOneBy([ 'prettyName' => $alimentName ]);
         return $aliment;
     }
 }

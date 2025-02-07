@@ -50,11 +50,6 @@ class Aliment
         return $this->getName() ?? 'anonymous_aliment';
     }
 
-    public function getNameAndUnit()
-    {
-        return $this->getName() . ' (' . $this->getUnit()->getName() . ')';
-    }
-
     public function getId(): ?int
     {
         return $this->id;
