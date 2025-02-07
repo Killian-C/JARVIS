@@ -12,6 +12,17 @@ dishBlocks.forEach( container => {
         listedForm.classList.add('dish-form');
         const regexDish      = /__name__/g;
         listedForm.innerHTML = dishForm.replace(regexDish, 'dish_' + dishCount);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML  = '<i class="fas fa-trash"></i>'
+        deleteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            listedForm.remove();
+        })
+        listedForm.appendChild(deleteBtn);
+
+
+
         container.appendChild(listedForm);
     });
 });

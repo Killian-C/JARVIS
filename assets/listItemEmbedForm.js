@@ -11,7 +11,15 @@ addListItemButton.addEventListener('click', (e) => {
 
     listedForm.querySelector('#shopping_list_listItems_list_item_' + index + '_quantity').value = 1;
     const listedFormDiv = listedForm.querySelector('#shopping_list_listItems_list_item_' + index);
-    console.log(listedFormDiv);
     listedFormDiv.classList.add('d-flex', 'justify-content-around', 'align-items-center');
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML  = '<i class="fas fa-trash"></i>'
+    deleteBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        listedForm.remove();
+    })
+    listedForm.appendChild(deleteBtn);
+
     listItemsContainer.appendChild(listedForm);
 })
